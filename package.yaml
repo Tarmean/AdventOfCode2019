@@ -1,0 +1,76 @@
+# This YAML file describes your package. Stack will automatically generate a
+# Cabal file when you run `stack build`. See the hpack website for help with
+# this file: <https://github.com/sol/hpack>.
+name: Scratch
+version: '0.0.0'
+github: "Tarmean/Scratch"
+license: MIT
+author: "Cyril Fahlenbock"
+maintainer: "Cyril Fahlenbock"
+# synopsis: A new Haskeleton package.
+# description: Scratch is a new Haskeleton package.
+# category: Other
+
+extra-source-files:
+- CHANGELOG.md
+- LICENSE.md
+- package.yaml
+- README.md
+- stack.yaml
+
+ghc-options: -Wall
+
+library:
+  dependencies:
+  - base
+  - mtl
+  - text
+  - bytestring
+  - vector 
+  - lens 
+  - lens-regex-pcre
+  - containers
+  - ad
+  - unordered-containers
+  source-dirs:
+      - library/AOC2018
+      - library
+
+executables:
+  Scratch:
+    source-dirs: executable
+    main: Main.hs
+    dependencies:
+    - base
+    - Scratch
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+benchmarks:
+  Scratch-benchmarks:
+    source-dirs: benchmark
+    main: Main.hs
+    dependencies:
+    - base
+    - Scratch
+    - criterion
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+tests:
+  Scratch-test-suite:
+    source-dirs: test-suite
+    main: Main.hs
+    dependencies:
+    - base
+    - Scratch
+    - tasty
+    - tasty-hspec
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
