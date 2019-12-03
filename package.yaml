@@ -30,6 +30,7 @@ library:
   - containers
   - unordered-containers
   # - ad
+  - text
   - search-algorithms
   - primitive
   - vector
