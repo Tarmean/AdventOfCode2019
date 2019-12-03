@@ -1,0 +1,727 @@
+	Mon Dec 02 16:48 2019 Time and Allocation Profiling Report  (Final)
+
+	   AOC.exe +RTS -N -p -RTS
+
+	total time  =        0.02 secs   (65 ticks @ 1000 us, 8 processors)
+	total alloc = 665,522,720 bytes  (excludes profiling overheads)
+
+COST CENTRE      MODULE                        SRC                                        %time %alloc
+
+>>=.\.\          Aoc19_2                       library\Aoc19_2.hs:37:57-79                 35.4   15.9
+step.binOp       Aoc19_2                       library\Aoc19_2.hs:(89,5)-(95,24)           18.5   30.5
+readAt.\         Aoc19_2                       library\Aoc19_2.hs:122:36-55                 7.7    0.0
+>>=.\            Aoc19_2                       library\Aoc19_2.hs:37:36-82                  7.7   27.5
+readAt           Aoc19_2                       library\Aoc19_2.hs:122:3-55                  6.2    8.6
+primitive        Control.Monad.Primitive       Control\Monad\Primitive.hs:195:3-16          6.2    2.1
+writeAt.\        Aoc19_2                       library\Aoc19_2.hs:123:39-59                 3.1    0.0
+>>=              Aoc19_2                       library\Aoc19_2.hs:37:3-82                   3.1    0.0
+basicUnsafeRead  Data.Vector.Primitive.Mutable Data\Vector\Primitive\Mutable.hs:112:3-63    3.1    4.4
+step             Aoc19_2                       library\Aoc19_2.hs:(81,1)-(95,24)            1.5    0.0
+runMachine       Aoc19_2                       library\Aoc19_2.hs:(101,1)-(106,17)          1.5    0.3
+return.\         Aoc19_2                       library\Aoc19_2.hs:35:31-35                  1.5    0.0
+return           Aoc19_2                       library\Aoc19_2.hs:35:3-36                   1.5    0.0
+basicUnsafeWrite Data.Vector.Unboxed.Base      Data\Vector\Unboxed\Base.hs:210:1480-1538    1.5    0.0
+basicLength      Data.Vector.Unboxed.Base      Data\Vector\Unboxed\Base.hs:210:940-980      1.5    0.0
+writeAt          Aoc19_2                       library\Aoc19_2.hs:123:3-59                  0.0    1.8
+setIP            Aoc19_2                       library\Aoc19_2.hs:127:3-31                  0.0    2.0
+<|>.\            Aoc19_2                       library\Aoc19_2.hs:30:37-63                  0.0    1.8
+basicUnsafeWrite Data.Vector.Primitive.Mutable Data\Vector\Primitive\Mutable.hs:115:3-69    0.0    1.3
+readByteArray#   Data.Primitive.Types          Data\Primitive\Types.hs:267:297-428          0.0    2.9
+
+
+                                                                                                                                              individual      inherited
+COST CENTRE                       MODULE                            SRC                                                   no.      entries  %time %alloc   %time %alloc
+
+MAIN                              MAIN                              <built-in>                                            1259          0    0.0    0.0   100.0  100.0
+ CAF                              GHC.Conc.Windows                  <entire-module>                                       2487          0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Handle.Text                <entire-module>                                       2450          0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Handle.FD                  <entire-module>                                       2448          0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Encoding.CodePage          <entire-module>                                       2439          0    0.0    0.0     0.0    0.0
+ CAF                              GHC.IO.Encoding                   <entire-module>                                       2438          0    0.0    0.0     0.0    0.0
+ CAF:$fAlternativeM2              Aoc19_2                           <no location info>                                    1314          0    0.0    0.0     0.0    0.0
+  pure                            Aoc19_2                           library\Aoc19_2.hs:26:3-15                            2718          1    0.0    0.0     0.0    0.0
+ CAF:$fAlternativeM6              Aoc19_2                           <no location info>                                    1308          0    0.0    0.0     0.0    0.0
+  empty                           Aoc19_2                           library\Aoc19_2.hs:29:3-28                            2774          1    0.0    0.0     0.0    0.0
+ CAF:$fApplicativeId4             Data.Vector.Fusion.Util           <no location info>                                    1371          0    0.0    0.0     0.0    0.0
+  pure                            Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:31:3-11                    2541          1    0.0    0.0     0.0    0.0
+ CAF:$fMachineM2                  Aoc19_2                           <no location info>                                    1312          0    0.0    0.0     0.0    0.0
+  pop                             Aoc19_2                           library\Aoc19_2.hs:(129,3)-(133,11)                   2616          1    0.0    0.0     0.0    0.0
+ CAF:$fMonadId1                   Data.Vector.Fusion.Util           <no location info>                                    1373          0    0.0    0.0     0.0    0.0
+  return                          Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:35:3-15                    2540          1    0.0    0.0     0.0    0.0
+ CAF:$fPrimMonadST1_r3UH          Control.Monad.Primitive           <no location info>                                    1961          0    0.0    0.0     0.0    0.0
+  primitive                       Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2572          1    0.0    0.0     0.0    0.0
+ CAF:doBoundsChecks               Data.Vector.Internal.Check        Data\Vector\Internal\Check.hs:55:1-14                 1362          0    0.0    0.0     0.0    0.0
+  doBoundsChecks                  Data.Vector.Internal.Check        Data\Vector\Internal\Check.hs:55:1-21                 2629          1    0.0    0.0     0.0    0.0
+ CAF:doInternalChecks             Data.Vector.Internal.Check        Data\Vector\Internal\Check.hs:71:1-16                 1364          0    0.0    0.0     0.0    0.0
+  doInternalChecks                Data.Vector.Internal.Check        Data\Vector\Internal\Check.hs:71:1-24                 2567          1    0.0    0.0     0.0    0.0
+ CAF:doUnsafeChecks               Data.Vector.Internal.Check        Data\Vector\Internal\Check.hs:64:1-14                 1363          0    0.0    0.0     0.0    0.0
+  doUnsafeChecks                  Data.Vector.Internal.Check        Data\Vector\Internal\Check.hs:64:1-22                 2527          1    0.0    0.0     0.0    0.0
+ CAF:ls                           Aoc19_2                           library\Aoc19_2.hs:145:1-2                            1332          0    0.0    0.0     0.0    0.0
+  ls                              Aoc19_2                           library\Aoc19_2.hs:145:1-438                          2524          1    0.0    0.0     0.0    0.0
+   >>=                            Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:36:3-18                    2539        158    0.0    0.0     0.0    0.0
+    fmap                          Data.Vector.Fusion.Stream.Monadic Data\Vector\Fusion\Stream\Monadic.hs:(133,3)-(135,20) 2542        158    0.0    0.0     0.0    0.0
+     basicUnsafeWrite             Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1480-1538             2568        157    0.0    0.0     0.0    0.0
+      basicUnsafeWrite            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:115:3-69             2569        157    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2573          0    0.0    0.0     0.0    0.0
+        writeByteArray#           Data.Primitive.Types              Data\Primitive\Types.hs:267:433-499                   2574        157    0.0    0.0     0.0    0.0
+   basicUnsafeSlice               Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1016-1084             2570        158    0.0    0.0     0.0    0.0
+    basicUnsafeSlice              Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(85,3)-(86,25)       2571        158    0.0    0.0     0.0    0.0
+   unId                           Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:25:21-24                   2538        158    0.0    0.0     0.0    0.0
+   basicLength                    Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2543        157    0.0    0.0     0.0    0.0
+    basicLength                   Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2544        157    0.0    0.0     0.0    0.0
+   basicUnsafeGrow                Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1868-1936             2548          9    0.0    0.0     0.0    0.0
+    basicUnsafeGrow               Data.Vector.Generic.Mutable.Base  Data\Vector\Generic\Mutable\Base.hs:(138,3)-(144,23)  2549          9    0.0    0.0     0.0    0.0
+     basicUnsafeCopy              Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(118,3)-(121,34)     2560          9    0.0    0.0     0.0    0.0
+      primitive                   Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2561          9    0.0    0.0     0.0    0.0
+       unI#                       Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2562         27    0.0    0.0     0.0    0.0
+       basicUnsafeCopy.sz         Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:121:7-34             2563          9    0.0    0.0     0.0    0.0
+        sizeOf                    Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2564          9    0.0    0.0     0.0    0.0
+         sizeOf#                  Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2565          9    0.0    0.0     0.0    0.0
+          unI#                    Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2566          9    0.0    0.0     0.0    0.0
+     basicUnsafeGrow.n            Data.Vector.Generic.Mutable.Base  Data\Vector\Generic\Mutable\Base.hs:144:7-23          2550          9    0.0    0.0     0.0    0.0
+      basicLength                 Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2551          9    0.0    0.0     0.0    0.0
+     basicUnsafeNew               Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2552          9    0.0    0.0     0.0    0.0
+      basicUnsafeNew.mx           Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:102:7-37             2553          9    0.0    0.0     0.0    0.0
+      basicUnsafeNew.size         Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2554          9    0.0    0.0     0.0    0.0
+       sizeOf                     Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2555          9    0.0    0.0     0.0    0.0
+        sizeOf#                   Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2556          9    0.0    0.0     0.0    0.0
+         unI#                     Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2557          9    0.0    0.0     0.0    0.0
+      primitive                   Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2558          9    0.0    0.0     0.0    0.0
+     basicUnsafeSlice             Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(85,3)-(86,25)       2559          9    0.0    0.0     0.0    0.0
+   enlarge_delta                  Data.Vector.Generic.Mutable       Data\Vector\Generic\Mutable.hs:636:1-34               2545          9    0.0    0.0     0.0    0.0
+    basicLength                   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2546          9    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2547          9    0.0    0.0     0.0    0.0
+   basicUnsafeFreeze              Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:508-575               2576          1    0.0    0.0     0.0    0.0
+    basicUnsafeFreeze             Data.Vector.Primitive             Data\Vector\Primitive.hs:(208,3)-(209,51)             2577          1    0.0    0.0     0.0    0.0
+     primitive                    Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2578          1    0.0    0.0     0.0    0.0
+   basicUnsafeNew                 Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2528          1    0.0    0.0     0.0    0.0
+    basicUnsafeNew                Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2529          1    0.0    0.0     0.0    0.0
+     basicUnsafeNew.mx            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:102:7-37             2530          1    0.0    0.0     0.0    0.0
+     basicUnsafeNew.size          Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2531          1    0.0    0.0     0.0    0.0
+      sizeOf                      Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2532          1    0.0    0.0     0.0    0.0
+       sizeOf#                    Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2533          1    0.0    0.0     0.0    0.0
+        unI#                      Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2534          1    0.0    0.0     0.0    0.0
+     primitive                    Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2536          1    0.0    0.0     0.0    0.0
+   sChunks                        Data.Vector.Fusion.Bundle.Monadic Data\Vector\Fusion\Bundle\Monadic.hs:122:30-36        2537          1    0.0    0.0     0.0    0.0
+   sSize                          Data.Vector.Fusion.Bundle.Monadic Data\Vector\Fusion\Bundle\Monadic.hs:124:30-34        2526          1    0.0    0.0     0.0    0.0
+   upperBound                     Data.Vector.Fusion.Bundle.Size    Data\Vector\Fusion\Bundle\Size.hs:(118,1)-(120,30)    2525          1    0.0    0.0     0.0    0.0
+ CAF:lvl51_rfOM                   Aoc19_2                           <no location info>                                    1336          0    0.0    0.0     0.0    0.0
+  runMachine                      Aoc19_2                           library\Aoc19_2.hs:(101,1)-(106,17)                   2787          0    0.0    0.0     0.0    0.0
+   basicUnsafeNew                 Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2788          0    0.0    0.0     0.0    0.0
+    basicUnsafeNew                Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2789          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew.mx            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:102:7-37             2790          0    0.0    0.0     0.0    0.0
+ CAF:main1                        Aoc19_2                           <no location info>                                    1360          0    0.0    0.0     0.0    0.0
+  main                            Aoc19_2                           library\Aoc19_2.hs:(140,1)-(143,77)                   2520          1    0.0    0.0     0.0    0.0
+ CAF:main1                        Example                           <no location info>                                    1294          0    0.0    0.0     0.0    0.0
+  main                            Example                           library\Example.hs:7:1-19                             2519          1    0.0    0.0     0.0    0.0
+ CAF:main1                        Main                              <no location info>                                    1266          0    0.0    0.0     0.0    0.0
+  main                            Main                              executable\Main.hs:7:1-19                             2518          1    0.0    0.0     0.0    0.0
+ CAF:main2                        Aoc19_2                           <no location info>                                    1358          0    0.0    0.0   100.0  100.0
+  main                            Aoc19_2                           library\Aoc19_2.hs:(140,1)-(143,77)                   2815          0    0.0    0.0   100.0  100.0
+   main.go                        Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2816       5336    0.0    0.0   100.0  100.0
+    unId                          Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:25:21-24                   2992      10672    0.0    0.0     0.0    0.0
+    >>=                           Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2838       5336    0.0    0.0     0.0    0.0
+     >>=.\                        Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2880       5336    0.0    0.0     0.0    0.0
+    basicLength                   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:664-703               2993       5336    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Primitive             Data\Vector\Primitive.hs:216:3-32                     2994       5336    0.0    0.0     0.0    0.0
+    basicUnsafeIndexM             Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:817-872               2995       5336    0.0    0.0     0.0    0.0
+     basicUnsafeIndexM            Data.Vector.Primitive             Data\Vector\Primitive.hs:222:3-75                     2996       5336    0.0    0.0     0.0    0.0
+      indexByteArray#             Data.Primitive.Types              Data\Primitive\Types.hs:267:214-279                   2997       5336    0.0    0.0     0.0    0.0
+    runMachine                    Aoc19_2                           library\Aoc19_2.hs:(101,1)-(106,17)                   2817       5336    1.5    0.3   100.0   99.3
+     >>=                          Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2841    2454560    3.1    0.0    96.9   96.6
+      >>=.\                       Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2842    3879272    7.7   27.2    93.8   96.6
+       >>=.\.\                    Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2856      32016    0.0    0.0     0.0    0.2
+        runM                      Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2857      32016    0.0    0.0     0.0    0.0
+        writeAt                   Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2858      10672    0.0    0.1     0.0    0.1
+         writeAt.\                Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2859      10672    0.0    0.0     0.0    0.0
+        return                    Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2924       5336    0.0    0.0     0.0    0.0
+        program                   Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2927          0    0.0    0.0     0.0    0.0
+         <|>                      Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2967          0    0.0    0.0     0.0    0.0
+          <|>.\                   Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2968       5336    0.0    0.0     0.0    0.0
+         step                     Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2928          0    0.0    0.0     0.0    0.0
+          step.binOp              Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2929          0    0.0    0.0     0.0    0.0
+       execOp                     Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2843          0    0.0    0.0     0.0    0.1
+        push                      Aoc19_2                           library\Aoc19_2.hs:(134,3)-(135,61)                   2844          0    0.0    0.1     0.0    0.1
+         push.\                   Aoc19_2                           library\Aoc19_2.hs:135:7-61                           2845      10672    0.0    0.1     0.0    0.1
+          >>=.\.\                 Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2846       5336    0.0    0.0     0.0    0.0
+           runM                   Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2847       5336    0.0    0.0     0.0    0.0
+          push.\.\                Aoc19_2                           library\Aoc19_2.hs:135:38-60                          2875       5336    0.0    0.0     0.0    0.0
+       pop                        Aoc19_2                           library\Aoc19_2.hs:(129,3)-(133,11)                   2853          0    0.0    0.0     1.5    0.3
+        pop.\                     Aoc19_2                           library\Aoc19_2.hs:(129,31)-(133,11)                  2854          0    0.0    0.2     1.5    0.3
+         >>=.\.\                  Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2860      10672    1.5    0.0     1.5    0.1
+          runM                    Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2876      10672    0.0    0.0     0.0    0.0
+          writeAt                 Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2861          0    0.0    0.0     0.0    0.1
+           writeAt.\              Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2862          0    0.0    0.0     0.0    0.1
+            basicUnsafeWrite      Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1480-1538             2868      10672    0.0    0.0     0.0    0.1
+             basicUnsafeWrite     Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:115:3-69             2869      10672    0.0    0.1     0.0    0.1
+              primitive           Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2870      10672    0.0    0.0     0.0    0.0
+               writeByteArray#    Data.Primitive.Types              Data\Primitive\Types.hs:267:433-499                   2871      10672    0.0    0.0     0.0    0.0
+            execOp                Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2877          0    0.0    0.0     0.0    0.1
+             push                 Aoc19_2                           library\Aoc19_2.hs:(134,3)-(135,61)                   2878          0    0.0    0.0     0.0    0.1
+              push.\              Aoc19_2                           library\Aoc19_2.hs:135:7-61                           2879          0    0.0    0.1     0.0    0.1
+               push.\.\           Aoc19_2                           library\Aoc19_2.hs:135:38-60                          2881       5336    0.0    0.0     0.0    0.0
+            return                Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2900          0    0.0    0.0     0.0    0.0
+             return.\             Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2901          0    0.0    0.0     0.0    0.0
+         pop.\.(...)              Aoc19_2                           library\Aoc19_2.hs:131:11-24                          2873      10672    0.0    0.0     0.0    0.0
+          stack                   Aoc19_2                           library\Aoc19_2.hs:22:21-25                           2874      10672    0.0    0.0     0.0    0.0
+         pop.\.x                  Aoc19_2                           library\Aoc19_2.hs:131:11-24                          2872      10672    0.0    0.0     0.0    0.0
+         execOp                   Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2855          0    0.0    0.0     0.0    0.0
+       program                    Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2902          0    0.0    0.0    84.6   68.7
+        <|>                       Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2998          0    0.0    0.0     0.0    1.7
+         <|>.\                    Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2999     197308    0.0    1.7     0.0    1.7
+        getIP                     Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2903          0    0.0    0.0    53.8   27.6
+         getIP.\                  Aoc19_2                           library\Aoc19_2.hs:124:34-38                          2904     811072    0.0    0.0    53.8   27.6
+          >>=.\.\                 Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2905    2635984   21.5    9.0    53.8   27.6
+           runM                   Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2923    2635984    0.0    0.0     0.0    0.0
+           readAt                 Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2906     202768    3.1    1.2    21.5    9.8
+            readAt.\              Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2907     202768    4.6    0.0    18.5    8.6
+             basicLength          Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2908    1221944    1.5    0.0     1.5    0.0
+              basicLength         Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2909    1221944    0.0    0.0     0.0    0.0
+             basicUnsafeRead      Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1404-1456             2910    1221944    0.0    0.0     7.7    7.3
+              basicUnsafeRead     Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:112:3-63             2911    1221944    3.1    4.4     7.7    7.3
+               primitive          Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2912    1221944    4.6    0.0     4.6    2.9
+                readByteArray#    Data.Primitive.Types              Data\Primitive\Types.hs:267:297-428                   2913    1221944    0.0    2.9     0.0    2.9
+             empty                Aoc19_2                           library\Aoc19_2.hs:29:3-28                            2976          0    0.0    0.0     0.0    0.0
+              return              Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2977          0    0.0    0.0     0.0    0.0
+               return.\           Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2978          0    0.0    0.0     0.0    0.0
+             return               Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2914          0    0.0    0.0     0.0    0.0
+              return.\            Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2915          0    0.0    0.0     0.0    0.0
+             step                 Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2936          0    0.0    0.0     0.0    0.0
+              step.binOp          Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2937          0    0.0    0.0     0.0    0.0
+               return             Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2953          0    0.0    0.0     0.0    0.0
+                return.\          Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2954          0    0.0    0.0     0.0    0.0
+             writeAt              Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2957          0    0.0    0.0     4.6    1.2
+              writeAt.\           Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2958          0    3.1    0.0     4.6    1.2
+               basicLength        Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2959     202768    0.0    0.0     0.0    0.0
+                basicLength       Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2960     202768    0.0    0.0     0.0    0.0
+               basicUnsafeWrite   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1480-1538             2961     202768    1.5    0.0     1.5    1.2
+                basicUnsafeWrite  Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:115:3-69             2962     202768    0.0    1.2     0.0    1.2
+                 primitive        Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2963     202768    0.0    0.0     0.0    0.0
+                  writeByteArray# Data.Primitive.Types              Data\Primitive\Types.hs:267:433-499                   2964     202768    0.0    0.0     0.0    0.0
+               return             Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2965          0    0.0    0.0     0.0    0.0
+                return.\          Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2966          0    0.0    0.0     0.0    0.0
+           return                 Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2925     202768    1.5    0.0     3.1    0.0
+            return.\              Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2926     208104    1.5    0.0     1.5    0.0
+           setIP                  Aoc19_2                           library\Aoc19_2.hs:127:3-31                           2920     202768    0.0    0.5     0.0    0.5
+            modifyIP              Aoc19_2                           library\Aoc19_2.hs:(125,3)-(126,16)                   2921     202768    0.0    0.0     0.0    0.0
+             modifyIP.\           Aoc19_2                           library\Aoc19_2.hs:126:7-16                           2922     208104    0.0    0.0     0.0    0.0
+           writeAt                Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2955     202768    0.0    1.7     0.0    1.7
+            writeAt.\             Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2956     202768    0.0    0.0     0.0    0.0
+           <|>                    Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2969          0    0.0    0.0     0.0    0.0
+            <|>.\                 Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2970        124    0.0    0.0     0.0    0.0
+           empty                  Aoc19_2                           library\Aoc19_2.hs:29:3-28                            2971          0    0.0    0.0     0.0    0.0
+            empty.\               Aoc19_2                           library\Aoc19_2.hs:29:27                              2972       5336    0.0    0.0     0.0    0.0
+           step                   Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2932          0    0.0    0.0     7.7    6.6
+            step.binOp            Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2933          0    7.7    6.6     7.7    6.6
+             return               Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2943     608304    0.0    0.0     0.0    0.0
+              return.\            Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2950          0    0.0    0.0     0.0    0.0
+        return                    Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2973          0    0.0    0.0     0.0    0.0
+         return.\                 Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2974       5336    0.0    0.0     0.0    0.0
+          runMachine.\            Aoc19_2                           library\Aoc19_2.hs:104:37-49                          2975       5336    0.0    0.0     0.0    0.0
+        step                      Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2930          0    1.5    0.0    30.8   39.5
+         step.binOp               Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2931          0   10.8   23.9    29.2   39.5
+          readAt                  Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2934     811072    3.1    5.8     6.2    5.8
+           readAt.\               Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2935     811072    3.1    0.0     3.1    0.0
+          setIP                   Aoc19_2                           library\Aoc19_2.hs:127:3-31                           2938     608304    0.0    1.5     4.6    1.5
+           modifyIP               Aoc19_2                           library\Aoc19_2.hs:(125,3)-(126,16)                   2939     608304    0.0    0.0     4.6    0.0
+            modifyIP.\            Aoc19_2                           library\Aoc19_2.hs:126:7-16                           2940     608304    0.0    0.0     4.6    0.0
+             >>=.\.\              Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2941     608304    4.6    0.0     4.6    0.0
+              runM                Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2942     608304    0.0    0.0     0.0    0.0
+              getIP               Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2944          0    0.0    0.0     0.0    0.0
+               getIP.\            Aoc19_2                           library\Aoc19_2.hs:124:34-38                          2945          0    0.0    0.0     0.0    0.0
+          return                  Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2946          0    0.0    0.0     7.7    8.3
+           return.\               Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2947     608304    0.0    0.0     7.7    8.3
+            >>=.\.\               Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2948     608304    7.7    6.8     7.7    8.3
+             runM                 Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2949     608304    0.0    0.0     0.0    0.0
+             readAt               Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2951     202768    0.0    1.5     0.0    1.5
+              readAt.\            Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2952     202768    0.0    0.0     0.0    0.0
+       return                     Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2918          0    0.0    0.0     0.0    0.0
+        return.\                  Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2919          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew               Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2821      10672    0.0    0.0     0.0    2.3
+      basicUnsafeNew              Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2822      10672    0.0    0.2     0.0    2.3
+       basicUnsafeNew.mx          Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:102:7-37             2823      10672    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2828      10672    0.0    2.1     0.0    2.1
+       basicUnsafeNew.size        Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2824       5336    0.0    0.0     0.0    0.0
+        sizeOf                    Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2825       5336    0.0    0.0     0.0    0.0
+         sizeOf#                  Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2826       5336    0.0    0.0     0.0    0.0
+          unI#                    Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2827       5336    0.0    0.0     0.0    0.0
+     execOp                       Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2839      10672    0.0    0.0     0.0    0.0
+      push                        Aoc19_2                           library\Aoc19_2.hs:(134,3)-(135,61)                   2840      10672    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2979       5336    0.0    0.0     0.0    0.0
+      basicLength                 Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2980       5336    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:664-703               2819       5336    0.0    0.0     0.0    0.0
+      basicLength                 Data.Vector.Primitive             Data\Vector\Primitive.hs:216:3-32                     2820       5336    0.0    0.0     0.0    0.0
+     basicUnsafeCopy              Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1708-1774             2981       5336    0.0    0.0     0.0    0.0
+      basicUnsafeCopy             Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(118,3)-(121,34)     2982       5336    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2983       5336    0.0    0.0     0.0    0.0
+        unI#                      Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2984      16008    0.0    0.0     0.0    0.0
+        basicUnsafeCopy.sz        Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:121:7-34             2985       5336    0.0    0.0     0.0    0.0
+         sizeOf                   Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2986       5336    0.0    0.0     0.0    0.0
+          sizeOf#                 Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2987       5336    0.0    0.0     0.0    0.0
+           unI#                   Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2988       5336    0.0    0.0     0.0    0.0
+     basicUnsafeCopy              Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:892-955               2829       5336    0.0    0.0     1.5    0.0
+      basicUnsafeCopy             Data.Vector.Primitive             Data\Vector\Primitive.hs:(225,3)-(228,34)             2830       5336    0.0    0.0     1.5    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2831       5336    1.5    0.0     1.5    0.0
+        unI#                      Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2832      16008    0.0    0.0     0.0    0.0
+        basicUnsafeCopy.sz        Data.Vector.Primitive             Data\Vector\Primitive.hs:228:7-34                     2833       5336    0.0    0.0     0.0    0.0
+         sizeOf                   Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2834       5336    0.0    0.0     0.0    0.0
+          sizeOf#                 Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2835       5336    0.0    0.0     0.0    0.0
+           unI#                   Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2836       5336    0.0    0.0     0.0    0.0
+     basicUnsafeFreeze            Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:508-575               2989       5336    0.0    0.0     0.0    0.1
+      basicUnsafeFreeze           Data.Vector.Primitive             Data\Vector\Primitive.hs:(208,3)-(209,51)             2990       5336    0.0    0.1     0.0    0.1
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2991       5336    0.0    0.0     0.0    0.0
+     runM                         Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2837       5336    0.0    0.0     0.0    0.0
+     unId                         Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:25:21-24                   2818       5336    0.0    0.0     0.0    0.0
+    execOp                        Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2848          0    0.0    0.1     0.0    0.3
+     >>=                          Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2849          0    0.0    0.0     0.0    0.2
+      >>=.\                       Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2850      10672    0.0    0.1     0.0    0.2
+       >>=.\.\                    Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2863          0    0.0    0.0     0.0    0.0
+        writeAt                   Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2864          0    0.0    0.0     0.0    0.0
+         writeAt.\                Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2865          0    0.0    0.0     0.0    0.0
+          basicLength             Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2866      10672    0.0    0.0     0.0    0.0
+           basicLength            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2867      10672    0.0    0.0     0.0    0.0
+       pop                        Aoc19_2                           library\Aoc19_2.hs:(129,3)-(133,11)                   2851          0    0.0    0.1     0.0    0.1
+        pop.\                     Aoc19_2                           library\Aoc19_2.hs:(129,31)-(133,11)                  2852      10672    0.0    0.0     0.0    0.0
+    return                        Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2882          0    0.0    0.0     0.0    0.3
+     return.\                     Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2883       5336    0.0    0.0     0.0    0.3
+      runMachine                  Aoc19_2                           library\Aoc19_2.hs:(101,1)-(106,17)                   2884          0    0.0    0.0     0.0    0.3
+       >>=                        Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2885       5336    0.0    0.0     0.0    0.3
+        >>=.\                     Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2886      21344    0.0    0.1     0.0    0.3
+         >>=.\.\                  Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2887       5336    0.0    0.0     0.0    0.0
+          runM                    Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2888       5336    0.0    0.0     0.0    0.0
+          program                 Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2889          0    0.0    0.0     0.0    0.0
+           <|>                    Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2890          0    0.0    0.0     0.0    0.0
+            <|>.\                 Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2891       5336    0.0    0.0     0.0    0.0
+         program                  Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2892          0    0.0    0.0     0.0    0.1
+          getIP                   Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2894          0    0.0    0.0     0.0    0.1
+           getIP.\                Aoc19_2                           library\Aoc19_2.hs:124:34-38                          2895       5336    0.0    0.0     0.0    0.1
+            >>=.\.\               Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2896       5336    0.0    0.1     0.0    0.1
+             readAt               Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2897       5336    0.0    0.0     0.0    0.0
+              readAt.\            Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2899       5336    0.0    0.0     0.0    0.0
+             runM                 Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2898       5336    0.0    0.0     0.0    0.0
+             setIP                Aoc19_2                           library\Aoc19_2.hs:127:3-31                           2916       5336    0.0    0.0     0.0    0.0
+              modifyIP            Aoc19_2                           library\Aoc19_2.hs:(125,3)-(126,16)                   2917       5336    0.0    0.0     0.0    0.0
+          step                    Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2893          0    0.0    0.0     0.0    0.0
+ CAF:main3                        Aoc19_2                           <no location info>                                    1359          0    0.0    0.0     0.0    0.0
+  main                            Aoc19_2                           library\Aoc19_2.hs:(140,1)-(143,77)                   2522          0    0.0    0.0     0.0    0.0
+   main.go                        Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2523          1    0.0    0.0     0.0    0.0
+    unId                          Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:25:21-24                   2809          2    0.0    0.0     0.0    0.0
+    >>=                           Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2600          1    0.0    0.0     0.0    0.0
+     >>=.\                        Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2653          1    0.0    0.0     0.0    0.0
+    basicLength                   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:664-703               2810          1    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Primitive             Data\Vector\Primitive.hs:216:3-32                     2811          1    0.0    0.0     0.0    0.0
+    basicUnsafeIndexM             Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:817-872               2812          1    0.0    0.0     0.0    0.0
+     basicUnsafeIndexM            Data.Vector.Primitive             Data\Vector\Primitive.hs:222:3-75                     2813          1    0.0    0.0     0.0    0.0
+      indexByteArray#             Data.Primitive.Types              Data\Primitive\Types.hs:267:214-279                   2814          1    0.0    0.0     0.0    0.0
+    runMachine                    Aoc19_2                           library\Aoc19_2.hs:(101,1)-(106,17)                   2579          1    0.0    0.0     0.0    0.0
+     >>=                          Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2603        460    0.0    0.0     0.0    0.0
+      >>=.\                       Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2604        727    0.0    0.0     0.0    0.0
+       >>=.\.\                    Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2622          6    0.0    0.0     0.0    0.0
+        runM                      Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2623          6    0.0    0.0     0.0    0.0
+        writeAt                   Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2624          2    0.0    0.0     0.0    0.0
+         writeAt.\                Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2625          2    0.0    0.0     0.0    0.0
+        return                    Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2719          1    0.0    0.0     0.0    0.0
+        program                   Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2726          0    0.0    0.0     0.0    0.0
+         <|>                      Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2766          0    0.0    0.0     0.0    0.0
+          <|>.\                   Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2767          1    0.0    0.0     0.0    0.0
+         step                     Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2727          0    0.0    0.0     0.0    0.0
+          step.binOp              Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2728          0    0.0    0.0     0.0    0.0
+       execOp                     Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2605          0    0.0    0.0     0.0    0.0
+        push                      Aoc19_2                           library\Aoc19_2.hs:(134,3)-(135,61)                   2606          0    0.0    0.0     0.0    0.0
+         push.\                   Aoc19_2                           library\Aoc19_2.hs:135:7-61                           2607          2    0.0    0.0     0.0    0.0
+          >>=.\.\                 Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2608          1    0.0    0.0     0.0    0.0
+           runM                   Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2609          1    0.0    0.0     0.0    0.0
+          push.\.\                Aoc19_2                           library\Aoc19_2.hs:135:38-60                          2646          1    0.0    0.0     0.0    0.0
+       pop                        Aoc19_2                           library\Aoc19_2.hs:(129,3)-(133,11)                   2619          0    0.0    0.0     0.0    0.0
+        pop.\                     Aoc19_2                           library\Aoc19_2.hs:(129,31)-(133,11)                  2620          0    0.0    0.0     0.0    0.0
+         >>=.\.\                  Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2626          2    0.0    0.0     0.0    0.0
+          runM                    Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2647          2    0.0    0.0     0.0    0.0
+          writeAt                 Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2627          0    0.0    0.0     0.0    0.0
+           writeAt.\              Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2628          0    0.0    0.0     0.0    0.0
+            basicUnsafeWrite      Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1480-1538             2639          2    0.0    0.0     0.0    0.0
+             basicUnsafeWrite     Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:115:3-69             2640          2    0.0    0.0     0.0    0.0
+              primitive           Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2641          2    0.0    0.0     0.0    0.0
+               writeByteArray#    Data.Primitive.Types              Data\Primitive\Types.hs:267:433-499                   2642          2    0.0    0.0     0.0    0.0
+            execOp                Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2648          0    0.0    0.0     0.0    0.0
+             push                 Aoc19_2                           library\Aoc19_2.hs:(134,3)-(135,61)                   2649          0    0.0    0.0     0.0    0.0
+              push.\              Aoc19_2                           library\Aoc19_2.hs:135:7-61                           2650          0    0.0    0.0     0.0    0.0
+               push.\.\           Aoc19_2                           library\Aoc19_2.hs:135:38-60                          2661          1    0.0    0.0     0.0    0.0
+            return                Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2694          0    0.0    0.0     0.0    0.0
+             return.\             Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2695          0    0.0    0.0     0.0    0.0
+         pop.\.(...)              Aoc19_2                           library\Aoc19_2.hs:131:11-24                          2644          2    0.0    0.0     0.0    0.0
+          stack                   Aoc19_2                           library\Aoc19_2.hs:22:21-25                           2645          2    0.0    0.0     0.0    0.0
+         pop.\.x                  Aoc19_2                           library\Aoc19_2.hs:131:11-24                          2643          2    0.0    0.0     0.0    0.0
+         execOp                   Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2621          0    0.0    0.0     0.0    0.0
+       program                    Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2696          0    0.0    0.0     0.0    0.0
+        getIP                     Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2697          0    0.0    0.0     0.0    0.0
+         getIP.\                  Aoc19_2                           library\Aoc19_2.hs:124:34-38                          2698        152    0.0    0.0     0.0    0.0
+          >>=.\.\                 Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2699        494    0.0    0.0     0.0    0.0
+           runM                   Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2717        494    0.0    0.0     0.0    0.0
+           readAt                 Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2700         38    0.0    0.0     0.0    0.0
+            readAt.\              Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2701         38    0.0    0.0     0.0    0.0
+             basicLength          Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2702        229    0.0    0.0     0.0    0.0
+              basicLength         Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2703        229    0.0    0.0     0.0    0.0
+             basicUnsafeRead      Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1404-1456             2704        229    0.0    0.0     0.0    0.0
+              basicUnsafeRead     Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:112:3-63             2705        229    0.0    0.0     0.0    0.0
+               primitive          Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2706        229    0.0    0.0     0.0    0.0
+                readByteArray#    Data.Primitive.Types              Data\Primitive\Types.hs:267:297-428                   2707        229    0.0    0.0     0.0    0.0
+             empty                Aoc19_2                           library\Aoc19_2.hs:29:3-28                            2782          0    0.0    0.0     0.0    0.0
+              return              Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2783          0    0.0    0.0     0.0    0.0
+               return.\           Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2784          0    0.0    0.0     0.0    0.0
+             return               Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2708          0    0.0    0.0     0.0    0.0
+              return.\            Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2709          0    0.0    0.0     0.0    0.0
+             step                 Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2735          0    0.0    0.0     0.0    0.0
+              step.binOp          Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2736          0    0.0    0.0     0.0    0.0
+               return             Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2752          0    0.0    0.0     0.0    0.0
+                return.\          Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2753          0    0.0    0.0     0.0    0.0
+             writeAt              Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2756          0    0.0    0.0     0.0    0.0
+              writeAt.\           Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2757          0    0.0    0.0     0.0    0.0
+               basicLength        Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2758         38    0.0    0.0     0.0    0.0
+                basicLength       Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2759         38    0.0    0.0     0.0    0.0
+               basicUnsafeWrite   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1480-1538             2760         38    0.0    0.0     0.0    0.0
+                basicUnsafeWrite  Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:115:3-69             2761         38    0.0    0.0     0.0    0.0
+                 primitive        Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2762         38    0.0    0.0     0.0    0.0
+                  writeByteArray# Data.Primitive.Types              Data\Primitive\Types.hs:267:433-499                   2763         38    0.0    0.0     0.0    0.0
+               return             Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2764          0    0.0    0.0     0.0    0.0
+                return.\          Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2765          0    0.0    0.0     0.0    0.0
+           return                 Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2720         38    0.0    0.0     0.0    0.0
+            return.\              Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2721         39    0.0    0.0     0.0    0.0
+           setIP                  Aoc19_2                           library\Aoc19_2.hs:127:3-31                           2714         38    0.0    0.0     0.0    0.0
+            modifyIP              Aoc19_2                           library\Aoc19_2.hs:(125,3)-(126,16)                   2715         38    0.0    0.0     0.0    0.0
+             modifyIP.\           Aoc19_2                           library\Aoc19_2.hs:126:7-16                           2716         39    0.0    0.0     0.0    0.0
+           writeAt                Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2754         38    0.0    0.0     0.0    0.0
+            writeAt.\             Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2755         38    0.0    0.0     0.0    0.0
+           <|>                    Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2768          0    0.0    0.0     0.0    0.0
+            <|>.\                 Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2769         37    0.0    0.0     0.0    0.0
+           empty                  Aoc19_2                           library\Aoc19_2.hs:29:3-28                            2775          0    0.0    0.0     0.0    0.0
+            empty.\               Aoc19_2                           library\Aoc19_2.hs:29:27                              2776          1    0.0    0.0     0.0    0.0
+           step                   Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2731          0    0.0    0.0     0.0    0.0
+            step.binOp            Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2732          0    0.0    0.0     0.0    0.0
+             return               Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2742        114    0.0    0.0     0.0    0.0
+              return.\            Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2749          0    0.0    0.0     0.0    0.0
+        return                    Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2779          0    0.0    0.0     0.0    0.0
+         return.\                 Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2780          1    0.0    0.0     0.0    0.0
+          runMachine.\            Aoc19_2                           library\Aoc19_2.hs:104:37-49                          2781          1    0.0    0.0     0.0    0.0
+        step                      Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2729          0    0.0    0.0     0.0    0.0
+         step.binOp               Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2730          0    0.0    0.0     0.0    0.0
+          readAt                  Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2733        152    0.0    0.0     0.0    0.0
+           readAt.\               Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2734        152    0.0    0.0     0.0    0.0
+          setIP                   Aoc19_2                           library\Aoc19_2.hs:127:3-31                           2737        114    0.0    0.0     0.0    0.0
+           modifyIP               Aoc19_2                           library\Aoc19_2.hs:(125,3)-(126,16)                   2738        114    0.0    0.0     0.0    0.0
+            modifyIP.\            Aoc19_2                           library\Aoc19_2.hs:126:7-16                           2739        114    0.0    0.0     0.0    0.0
+             >>=.\.\              Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2740        114    0.0    0.0     0.0    0.0
+              runM                Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2741        114    0.0    0.0     0.0    0.0
+              getIP               Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2743          0    0.0    0.0     0.0    0.0
+               getIP.\            Aoc19_2                           library\Aoc19_2.hs:124:34-38                          2744          0    0.0    0.0     0.0    0.0
+          return                  Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2745          0    0.0    0.0     0.0    0.0
+           return.\               Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2746        114    0.0    0.0     0.0    0.0
+            >>=.\.\               Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2747        114    0.0    0.0     0.0    0.0
+             runM                 Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2748        114    0.0    0.0     0.0    0.0
+             readAt               Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2750         38    0.0    0.0     0.0    0.0
+              readAt.\            Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2751         38    0.0    0.0     0.0    0.0
+       return                     Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2712          0    0.0    0.0     0.0    0.0
+        return.\                  Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2713          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew               Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2583          2    0.0    0.0     0.0    0.0
+      basicUnsafeNew              Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2584          2    0.0    0.0     0.0    0.0
+       basicUnsafeNew.mx          Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:102:7-37             2585          2    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2590          2    0.0    0.0     0.0    0.0
+       basicUnsafeNew.size        Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2586          1    0.0    0.0     0.0    0.0
+        sizeOf                    Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2587          1    0.0    0.0     0.0    0.0
+         sizeOf#                  Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2588          1    0.0    0.0     0.0    0.0
+          unI#                    Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2589          1    0.0    0.0     0.0    0.0
+     execOp                       Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2601          2    0.0    0.0     0.0    0.0
+      push                        Aoc19_2                           library\Aoc19_2.hs:(134,3)-(135,61)                   2602          2    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2785          1    0.0    0.0     0.0    0.0
+      basicLength                 Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2786          1    0.0    0.0     0.0    0.0
+     basicLength                  Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:664-703               2581          1    0.0    0.0     0.0    0.0
+      basicLength                 Data.Vector.Primitive             Data\Vector\Primitive.hs:216:3-32                     2582          1    0.0    0.0     0.0    0.0
+     basicUnsafeCopy              Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1708-1774             2798          1    0.0    0.0     0.0    0.0
+      basicUnsafeCopy             Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(118,3)-(121,34)     2799          1    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2800          1    0.0    0.0     0.0    0.0
+        unI#                      Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2801          3    0.0    0.0     0.0    0.0
+        basicUnsafeCopy.sz        Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:121:7-34             2802          1    0.0    0.0     0.0    0.0
+         sizeOf                   Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2803          1    0.0    0.0     0.0    0.0
+          sizeOf#                 Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2804          1    0.0    0.0     0.0    0.0
+           unI#                   Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2805          1    0.0    0.0     0.0    0.0
+     basicUnsafeCopy              Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:892-955               2591          1    0.0    0.0     0.0    0.0
+      basicUnsafeCopy             Data.Vector.Primitive             Data\Vector\Primitive.hs:(225,3)-(228,34)             2592          1    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2593          1    0.0    0.0     0.0    0.0
+        unI#                      Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2594          3    0.0    0.0     0.0    0.0
+        basicUnsafeCopy.sz        Data.Vector.Primitive             Data\Vector\Primitive.hs:228:7-34                     2595          1    0.0    0.0     0.0    0.0
+         sizeOf                   Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2596          1    0.0    0.0     0.0    0.0
+          sizeOf#                 Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2597          1    0.0    0.0     0.0    0.0
+           unI#                   Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2598          1    0.0    0.0     0.0    0.0
+     basicUnsafeFreeze            Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:508-575               2806          1    0.0    0.0     0.0    0.0
+      basicUnsafeFreeze           Data.Vector.Primitive             Data\Vector\Primitive.hs:(208,3)-(209,51)             2807          1    0.0    0.0     0.0    0.0
+       primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2808          1    0.0    0.0     0.0    0.0
+     runM                         Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2599          1    0.0    0.0     0.0    0.0
+     unId                         Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:25:21-24                   2580          1    0.0    0.0     0.0    0.0
+    execOp                        Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2613          0    0.0    0.0     0.0    0.0
+     >>=                          Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2614          0    0.0    0.0     0.0    0.0
+      >>=.\                       Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2615          2    0.0    0.0     0.0    0.0
+       >>=.\.\                    Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2634          0    0.0    0.0     0.0    0.0
+        writeAt                   Aoc19_2                           library\Aoc19_2.hs:123:3-59                           2635          0    0.0    0.0     0.0    0.0
+         writeAt.\                Aoc19_2                           library\Aoc19_2.hs:123:39-59                          2636          0    0.0    0.0     0.0    0.0
+          basicLength             Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2637          2    0.0    0.0     0.0    0.0
+           basicLength            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2638          2    0.0    0.0     0.0    0.0
+       pop                        Aoc19_2                           library\Aoc19_2.hs:(129,3)-(133,11)                   2617          0    0.0    0.0     0.0    0.0
+        pop.\                     Aoc19_2                           library\Aoc19_2.hs:(129,31)-(133,11)                  2618          2    0.0    0.0     0.0    0.0
+    return                        Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2664          0    0.0    0.0     0.0    0.0
+     return.\                     Aoc19_2                           library\Aoc19_2.hs:35:31-35                           2665          1    0.0    0.0     0.0    0.0
+      runMachine                  Aoc19_2                           library\Aoc19_2.hs:(101,1)-(106,17)                   2666          0    0.0    0.0     0.0    0.0
+       >>=                        Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2667          1    0.0    0.0     0.0    0.0
+        >>=.\                     Aoc19_2                           library\Aoc19_2.hs:37:36-82                           2668          4    0.0    0.0     0.0    0.0
+         >>=.\.\                  Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2669          1    0.0    0.0     0.0    0.0
+          runM                    Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2670          1    0.0    0.0     0.0    0.0
+          program                 Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2673          0    0.0    0.0     0.0    0.0
+           <|>                    Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2674          0    0.0    0.0     0.0    0.0
+            <|>.\                 Aoc19_2                           library\Aoc19_2.hs:30:37-63                           2675          1    0.0    0.0     0.0    0.0
+         program                  Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2681          0    0.0    0.0     0.0    0.0
+          getIP                   Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2688          0    0.0    0.0     0.0    0.0
+           getIP.\                Aoc19_2                           library\Aoc19_2.hs:124:34-38                          2689          1    0.0    0.0     0.0    0.0
+            >>=.\.\               Aoc19_2                           library\Aoc19_2.hs:37:57-79                           2690          1    0.0    0.0     0.0    0.0
+             readAt               Aoc19_2                           library\Aoc19_2.hs:122:3-55                           2691          1    0.0    0.0     0.0    0.0
+              readAt.\            Aoc19_2                           library\Aoc19_2.hs:122:36-55                          2693          1    0.0    0.0     0.0    0.0
+             runM                 Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2692          1    0.0    0.0     0.0    0.0
+             setIP                Aoc19_2                           library\Aoc19_2.hs:127:3-31                           2710          1    0.0    0.0     0.0    0.0
+              modifyIP            Aoc19_2                           library\Aoc19_2.hs:(125,3)-(126,16)                   2711          1    0.0    0.0     0.0    0.0
+          step                    Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2682          0    0.0    0.0     0.0    0.0
+ CAF:poly_ds_rfP9                 Aoc19_2                           <no location info>                                    1347          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2683          0    0.0    0.0     0.0    0.0
+   step                           Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2684          0    0.0    0.0     0.0    0.0
+    >>=                           Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2685          1    0.0    0.0     0.0    0.0
+ CAF:poly_k1_rfPj                 Aoc19_2                           <no location info>                                    1356          0    0.0    0.0     0.0    0.0
+  main.go                         Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2651          0    0.0    0.0     0.0    0.0
+   >>=                            Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2652          1    0.0    0.0     0.0    0.0
+ CAF:poly_k_rfPh                  Aoc19_2                           <no location info>                                    1354          0    0.0    0.0     0.0    0.0
+  main.go                         Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2662          0    0.0    0.0     0.0    0.0
+   return                         Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2663          1    0.0    0.0     0.0    0.0
+ CAF:poly_lvl1_rfP8               Aoc19_2                           <no location info>                                    1346          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2722          0    0.0    0.0     0.0    0.0
+   step                           Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2723          0    0.0    0.0     0.0    0.0
+    step.binOp                    Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2724          1    0.0    0.0     0.0    0.0
+     >>=                          Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2725          3    0.0    0.0     0.0    0.0
+ CAF:poly_lvl_rfP7                Aoc19_2                           <no location info>                                    1345          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2770          0    0.0    0.0     0.0    0.0
+   step                           Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2771          0    0.0    0.0     0.0    0.0
+    step.binOp                    Aoc19_2                           library\Aoc19_2.hs:(89,5)-(95,24)                     2772          1    0.0    0.0     0.0    0.0
+     >>=                          Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2773          3    0.0    0.0     0.0    0.0
+ CAF:poly_m1_rfPb                 Aoc19_2                           <no location info>                                    1348          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2678          0    0.0    0.0     0.0    0.0
+   step                           Aoc19_2                           library\Aoc19_2.hs:(81,1)-(95,24)                     2679          1    0.0    0.0     0.0    0.0
+    >>=                           Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2680          1    0.0    0.0     0.0    0.0
+ CAF:poly_m2_rfPi                 Aoc19_2                           <no location info>                                    1355          0    0.0    0.0     0.0    0.0
+  main.go                         Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2654          0    0.0    0.0     0.0    0.0
+   execOp                         Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2655          1    0.0    0.0     0.0    0.0
+    >>=                           Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2656          1    0.0    0.0     0.0    0.0
+ CAF:poly_m3_rfPk                 Aoc19_2                           <no location info>                                    1357          0    0.0    0.0     0.0    0.0
+  main.go                         Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2610          0    0.0    0.0     0.0    0.0
+   execOp                         Aoc19_2                           library\Aoc19_2.hs:(48,1)-(54,27)                     2611          1    0.0    0.0     0.0    0.0
+    >>=                           Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2612          1    0.0    0.0     0.0    0.0
+ CAF:poly_ww_rfP6                 Aoc19_2                           <no location info>                                    1344          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2686          0    0.0    0.0     0.0    0.0
+   getIP                          Aoc19_2                           library\Aoc19_2.hs:124:3-38                           2687          1    0.0    0.0     0.0    0.0
+ CAF:program1                     Aoc19_2                           <no location info>                                    1349          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2671          1    0.0    0.0     0.0    0.0
+   <|>                            Aoc19_2                           library\Aoc19_2.hs:30:3-63                            2672          1    0.0    0.0     0.0    0.0
+ CAF:program3                     Aoc19_2                           <no location info>                                    1343          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2777          0    0.0    0.0     0.0    0.0
+   return                         Aoc19_2                           library\Aoc19_2.hs:35:3-36                            2778          1    0.0    0.0     0.0    0.0
+ CAF:program4                     Aoc19_2                           <no location info>                                    1350          0    0.0    0.0     0.0    0.0
+  program                         Aoc19_2                           library\Aoc19_2.hs:98:1-39                            2676          0    0.0    0.0     0.0    0.0
+   >>=                            Aoc19_2                           library\Aoc19_2.hs:37:3-82                            2677          1    0.0    0.0     0.0    0.0
+ CAF:sIZEOF_INT                   Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-10                    1964          0    0.0    0.0     0.0    0.0
+  sIZEOF_INT                      Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-14                    2535          1    0.0    0.0     0.0    0.0
+ CAF:size42_rfOK                  Aoc19_2                           <no location info>                                    1335          0    0.0    0.0     0.0    0.0
+  runMachine                      Aoc19_2                           library\Aoc19_2.hs:(101,1)-(106,17)                   2791          0    0.0    0.0     0.0    0.0
+   basicUnsafeNew                 Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2792          0    0.0    0.0     0.0    0.0
+    basicUnsafeNew                Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2793          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew.size          Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2794          1    0.0    0.0     0.0    0.0
+      sizeOf                      Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2795          1    0.0    0.0     0.0    0.0
+       sizeOf#                    Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2796          1    0.0    0.0     0.0    0.0
+        unI#                      Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2797          1    0.0    0.0     0.0    0.0
+ main                             Aoc19_2                           library\Aoc19_2.hs:(140,1)-(143,77)                   2521          0    0.0    0.0     0.0    0.0
+             <no location info>                                    1357          0    0.0    0.0     0.0    0.0
+  main.go                           Aoc19_2                           library\Aoc19_2.hs:141:7-102                          2611          0    0.0    0.0     0.0    0.0
+   execOp                           Aoc19_2                           library\Aoc19_2.hs:(47,1)-(53,27)                     2612          1    0.0    0.0     0.0    0.0
+    >>=                             Aoc19_2                           library\Aoc19_2.hs:36:3-72                            2613          1    0.0    0.0     0.0    0.0
+ CAF:program1                       Aoc19_2                           <no location info>                                    1349          0    0.0    0.0     0.0    0.0
+  program                           Aoc19_2                           library\Aoc19_2.hs:96:1-39                            2674          1    0.0    0.0     0.0    0.0
+   <|>                              Aoc19_2                           library\Aoc19_2.hs:30:3-57                            2675          1    0.0    0.0     0.0    0.0
+ CAF:program3                       Aoc19_2                           <no location info>                                    1344          0    0.0    0.0     0.0    0.0
+  program                           Aoc19_2                           library\Aoc19_2.hs:96:1-39                            2787          0    0.0    0.0     0.0    0.0
+   return                           Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2788          1    0.0    0.0     0.0    0.0
+ CAF:program4                       Aoc19_2                           <no location info>                                    1350          0    0.0    0.0     0.0    0.0
+  program                           Aoc19_2                           library\Aoc19_2.hs:96:1-39                            2679          0    0.0    0.0     0.0    0.0
+   >>=                              Aoc19_2                           library\Aoc19_2.hs:36:3-72                            2680          1    0.0    0.0     0.0    0.0
+ CAF:sIZEOF_INT                     Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-10                    1964          0    0.0    0.0     0.0    0.0
+  sIZEOF_INT                        Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-14                    2535          1    0.0    0.0     0.0    0.0
+ CAF:size42_rg0i                    Aoc19_2                           <no location info>                                    1337          0    0.0    0.0     0.0    0.0
+  runMachine                        Aoc19_2                           library\Aoc19_2.hs:(99,1)-(104,17)                    2807          0    0.0    0.0     0.0    0.0
+   basicUnsafeNew                   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2808          0    0.0    0.0     0.0    0.0
+    basicUnsafeNew                  Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2809          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew.size            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2810          1    0.0    0.0     0.0    0.0
+      sizeOf                        Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2811          1    0.0    0.0     0.0    0.0
+       sizeOf#                      Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2812          1    0.0    0.0     0.0    0.0
+        unI#                        Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2813          1    0.0    0.0     0.0    0.0
+ main                               Aoc19_2                           library\Aoc19_2.hs:(140,1)-(143,77)                   2521          0    0.0    0.0     0.0    0.0
+    Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2810          1    0.0    0.0     0.0    0.0
+      sizeOf                        Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2811          1    0.0    0.0     0.0    0.0
+       sizeOf#                      Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2812          1    0.0    0.0     0.0    0.0
+        unI#                        Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2813          1    0.0    0.0     0.0    0.0
+ main                               Aoc19_2                           library\Aoc19_2.hs:(140,1)-(143,77)                   2521          0    0.0    0.0     0.0    0.0
+        0    0.0    0.0     0.0    0.0
+   >>=                              Aoc19_2                           library\Aoc19_2.hs:36:3-72                            2657          1    0.0    0.0     0.0    0.0
+ CAF:sIZEOF_INT                     Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-10                    1952          0    0.0    0.0     0.0    0.0
+  sIZEOF_INT                        Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-14                    2523          1    0.0    0.0     0.0    0.0
+ CAF:size42_repU                    Aoc19_2                           <no location info>                                    1330          0    0.0    0.0     0.0    0.0
+  runMachine                        Aoc19_2                           library\Aoc19_2.hs:(98,1)-(103,17)                    2791          0    0.0    0.0     0.0    0.0
+   basicUnsafeNew                   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2792          0    0.0    0.0     0.0    0.0
+    basicUnsafeNew                  Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2793          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew.size            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2794          1    0.0    0.0     0.0    0.0
+      sizeOf                        Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2795          1    0.0    0.0     0.0    0.0
+       sizeOf#                      Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2796          1    0.0    0.0     0.0    0.0
+        unI#                        Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2797          1    0.0    0.0     0.0    0.0
+ main                               Aoc19_2                           library\Aoc19_2.hs:(135,1)-(138,77)                   2509          0    0.0    0.0     0.0    0.0
+   Aoc19_2                           library\Aoc19_2.hs:(69,5)-(73,45)                     2727          0    0.0    0.0     0.0    0.0
+               readInstruction           Aoc19_2                           library\Aoc19_2.hs:(39,1)-(43,8)                      2728          0    0.0    0.0     0.0    0.0
+                readAt                   Aoc19_2                           library\Aoc19_2.hs:109:3-51                           2729        114    0.0    0.0     0.0    0.0
+                 readAt.\                Aoc19_2                           library\Aoc19_2.hs:109:34-51                          2730        114    0.0    0.0     0.0    0.0
+                return                   Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2748        114    0.0    0.0     0.0    0.0
+                setIP                    Aoc19_2                           library\Aoc19_2.hs:116:3-31                           2742        114    0.0    0.0     0.0    0.0
+                 modifyIP                Aoc19_2                           library\Aoc19_2.hs:(114,3)-(115,57)                   2743        114    0.0    0.0     0.0    0.0
+                  modifyIP.\             Aoc19_2                           library\Aoc19_2.hs:115:7-57                           2744        114    0.0    0.0     0.0    0.0
+              readInstruction            Aoc19_2                           library\Aoc19_2.hs:(39,1)-(43,8)                      2687          0    0.0    0.0     0.0    0.0
+               readAt                    Aoc19_2                           library\Aoc19_2.hs:109:3-51                           2688         39    0.0    0.0     0.0    0.0
+                readAt.\                 Aoc19_2                           library\Aoc19_2.hs:109:34-51                          2689         39    0.0    0.0     0.0    0.0
+               return                    Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2712         39    0.0    0.0     0.0    0.0
+               setIP                     Aoc19_2                           library\Aoc19_2.hs:116:3-31                           2705         39    0.0    0.0     0.0    0.0
+                modifyIP                 Aoc19_2                           library\Aoc19_2.hs:(114,3)-(115,57)                   2706         39    0.0    0.0     0.0    0.0
+                 modifyIP.\              Aoc19_2                           library\Aoc19_2.hs:115:7-57                           2707         39    0.0    0.0     0.0    0.0
+          writeAt                        Aoc19_2                           library\Aoc19_2.hs:110:3-55                           2615          0    0.0    0.0     0.0    0.0
+           writeAt.\                     Aoc19_2                           library\Aoc19_2.hs:110:37-55                          2616          0    0.0    0.0     0.0    0.0
+            basicLength                  Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2618          2    0.0    0.0     0.0    0.0
+             basicLength                 Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2619          2    0.0    0.0     0.0    0.0
+            basicUnsafeWrite             Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1480-1538             2620          2    0.0    0.0     0.0    0.0
+             basicUnsafeWrite            Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:115:3-69             2621          2    0.0    0.0     0.0    0.0
+              primitive                  Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2622          2    0.0    0.0     0.0    0.0
+               writeByteArray#           Data.Primitive.Types              Data\Primitive\Types.hs:267:433-499                   2623          2    0.0    0.0     0.0    0.0
+            execOp                       Aoc19_2                           library\Aoc19_2.hs:(46,1)-(52,27)                     2629          0    0.0    0.0     0.0    0.0
+             push                        Aoc19_2                           library\Aoc19_2.hs:(123,3)-(124,59)                   2630          0    0.0    0.0     0.0    0.0
+              push.\                     Aoc19_2                           library\Aoc19_2.hs:124:7-59                           2631          0    0.0    0.0     0.0    0.0
+               push.\.\                  Aoc19_2                           library\Aoc19_2.hs:124:36-58                          2638          1    0.0    0.0     0.0    0.0
+                stack                    Aoc19_2                           library\Aoc19_2.hs:22:34-38                           2698          1    0.0    0.0     0.0    0.0
+         pop.\.(...)                     Aoc19_2                           library\Aoc19_2.hs:120:11-24                          2625        116    0.0    0.0     0.0    0.0
+          stack                          Aoc19_2                           library\Aoc19_2.hs:22:34-38                           2626        116    0.0    0.0     0.0    0.0
+         pop.\.x                         Aoc19_2                           library\Aoc19_2.hs:120:11-24                          2624        116    0.0    0.0     0.0    0.0
+         pop.\.xs                        Aoc19_2                           library\Aoc19_2.hs:120:11-24                          2639        116    0.0    0.0     0.0    0.0
+         execOp                          Aoc19_2                           library\Aoc19_2.hs:(46,1)-(52,27)                     2610          0    0.0    0.0     0.0    0.0
+       program                           Aoc19_2                           library\Aoc19_2.hs:(81,1)-(86,27)                     2661          0    0.0    0.0     0.0    0.0
+        program.go                       Aoc19_2                           library\Aoc19_2.hs:(83,5)-(86,27)                     2662          0    0.0    0.0     0.0    0.0
+         cut                             Aoc19_2                           library\Aoc19_2.hs:33:1-61                            2663          0    0.0    0.0     0.0    0.0
+          cut.\                          Aoc19_2                           library\Aoc19_2.hs:33:32-61                           2664         39    0.0    0.0     0.0    0.0
+           >>=.\.\                       Aoc19_2                           library\Aoc19_2.hs:36:50-69                           2833          1    0.0    0.0     0.0    0.0
+            program.go.\                 Aoc19_2                           library\Aoc19_2.hs:86:21-27                           2835          1    0.0    0.0     0.0    0.0
+            runM                         Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2834          1    0.0    0.0     0.0    0.0
+         step                            Aoc19_2                           library\Aoc19_2.hs:76:1-31                            2669          0    0.0    0.0     0.0    0.0
+          parseOp                        Aoc19_2                           library\Aoc19_2.hs:(61,1)-(73,45)                     2672          0    0.0    0.0     0.0    0.0
+           parseOp.binOp                 Aoc19_2                           library\Aoc19_2.hs:(69,5)-(73,45)                     2725          0    0.0    0.0     0.0    0.0
+            readInstruction              Aoc19_2                           library\Aoc19_2.hs:(39,1)-(43,8)                      2726          0    0.0    0.0     0.0    0.0
+           readInstruction               Aoc19_2                           library\Aoc19_2.hs:(39,1)-(43,8)                      2675          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew                      Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2571          2    0.0    0.0     0.0    0.0
+      basicUnsafeNew                     Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2572          2    0.0    0.0     0.0    0.0
+       basicUnsafeNew.mx                 Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:102:7-37             2573          2    0.0    0.0     0.0    0.0
+       primitive                         Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2578          2    0.0    0.0     0.0    0.0
+       basicUnsafeNew.size               Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2574          1    0.0    0.0     0.0    0.0
+        sizeOf                           Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2575          1    0.0    0.0     0.0    0.0
+         sizeOf#                         Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2576          1    0.0    0.0     0.0    0.0
+          unI#                           Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2577          1    0.0    0.0     0.0    0.0
+     execOp                              Aoc19_2                           library\Aoc19_2.hs:(46,1)-(52,27)                     2589          2    0.0    0.0     0.0    0.0
+      push                               Aoc19_2                           library\Aoc19_2.hs:(123,3)-(124,59)                   2590          2    0.0    0.0     0.0    0.0
+     basicLength                         Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:940-980               2854          1    0.0    0.0     0.0    0.0
+      basicLength                        Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:84:3-33              2855          1    0.0    0.0     0.0    0.0
+     basicLength                         Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:664-703               2569          1    0.0    0.0     0.0    0.0
+      basicLength                        Data.Vector.Primitive             Data\Vector\Primitive.hs:216:3-32                     2570          1    0.0    0.0     0.0    0.0
+     basicUnsafeCopy                     Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1708-1774             2867          1    0.0    0.0     0.0    0.0
+      basicUnsafeCopy                    Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(118,3)-(121,34)     2868          1    0.0    0.0     0.0    0.0
+       primitive                         Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2869          1    0.0    0.0     0.0    0.0
+        unI#                             Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2870          3    0.0    0.0     0.0    0.0
+        basicUnsafeCopy.sz               Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:121:7-34             2871          1    0.0    0.0     0.0    0.0
+         sizeOf                          Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2872          1    0.0    0.0     0.0    0.0
+          sizeOf#                        Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2873          1    0.0    0.0     0.0    0.0
+           unI#                          Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2874          1    0.0    0.0     0.0    0.0
+     basicUnsafeCopy                     Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:892-955               2579          1    0.0    0.0     0.0    0.0
+      basicUnsafeCopy                    Data.Vector.Primitive             Data\Vector\Primitive.hs:(225,3)-(228,34)             2580          1    0.0    0.0     0.0    0.0
+       primitive                         Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2581          1    0.0    0.0     0.0    0.0
+        unI#                             Data.Primitive.ByteArray          Data\Primitive\ByteArray.hs:289:1-17                  2582          3    0.0    0.0     0.0    0.0
+        basicUnsafeCopy.sz               Data.Vector.Primitive             Data\Vector\Primitive.hs:228:7-34                     2583          1    0.0    0.0     0.0    0.0
+         sizeOf                          Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2584          1    0.0    0.0     0.0    0.0
+          sizeOf#                        Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2585          1    0.0    0.0     0.0    0.0
+           unI#                          Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2586          1    0.0    0.0     0.0    0.0
+     basicUnsafeFreeze                   Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:211:508-575               2875          1    0.0    0.0     0.0    0.0
+      basicUnsafeFreeze                  Data.Vector.Primitive             Data\Vector\Primitive.hs:(208,3)-(209,51)             2876          1    0.0    0.0     0.0    0.0
+       primitive                         Control.Monad.Primitive           Control\Monad\Primitive.hs:195:3-16                   2877          1    0.0    0.0     0.0    0.0
+     runM                                Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2587          1    0.0    0.0     0.0    0.0
+     unId                                Data.Vector.Fusion.Util           Data\Vector\Fusion\Util.hs:25:21-24                   2568          1    0.0    0.0     0.0    0.0
+    execOp                               Aoc19_2                           library\Aoc19_2.hs:(46,1)-(52,27)                     2602          0    0.0    0.0     0.0    0.0
+     >>=                                 Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2603          0    0.0    0.0     0.0    0.0
+      >>=.\                              Aoc19_2                           library\Aoc19_2.hs:36:34-73                           2604          2    0.0    0.0     0.0    0.0
+       pop                               Aoc19_2                           library\Aoc19_2.hs:(118,3)-(122,11)                   2606          0    0.0    0.0     0.0    0.0
+        pop.\                            Aoc19_2                           library\Aoc19_2.hs:(118,29)-(122,11)                  2607          2    0.0    0.0     0.0    0.0
+    return                               Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2644          0    0.0    0.0     0.0    0.0
+     return.\                            Aoc19_2                           library\Aoc19_2.hs:35:29-31                           2645          1    0.0    0.0     0.0    0.0
+      runMachine                         Aoc19_2                           library\Aoc19_2.hs:(89,1)-(94,17)                     2646          0    0.0    0.0     0.0    0.0
+       >>=                               Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2647          0    0.0    0.0     0.0    0.0
+        >>=.\                            Aoc19_2                           library\Aoc19_2.hs:36:34-73                           2648          0    0.0    0.0     0.0    0.0
+         >>=.\.\                         Aoc19_2                           library\Aoc19_2.hs:36:50-69                           2649          1    0.0    0.0     0.0    0.0
+          runM                           Aoc19_2                           library\Aoc19_2.hs:23:21-24                           2650          1    0.0    0.0     0.0    0.0
+ CAF:poly_ds1_regp                       Aoc19_2                           <no location info>                                    1338          0    0.0    0.0     0.0    0.0
+  program                                Aoc19_2                           library\Aoc19_2.hs:(81,1)-(86,27)                     2658          0    0.0    0.0     0.0    0.0
+   program.go                            Aoc19_2                           library\Aoc19_2.hs:(83,5)-(86,27)                     2659          0    0.0    0.0     0.0    0.0
+    cut                                  Aoc19_2                           library\Aoc19_2.hs:33:1-61                            2660          1    0.0    0.0     0.0    0.0
+ CAF:poly_ds_rego                        Aoc19_2                           <no location info>                                    1337          0    0.0    0.0     0.0    0.0
+  program                                Aoc19_2                           library\Aoc19_2.hs:(81,1)-(86,27)                     2665          0    0.0    0.0     0.0    0.0
+   program.go                            Aoc19_2                           library\Aoc19_2.hs:(83,5)-(86,27)                     2666          0    0.0    0.0     0.0    0.0
+    step                                 Aoc19_2                           library\Aoc19_2.hs:76:1-31                            2667          1    0.0    0.0     0.0    0.0
+     >>=                                 Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2668          1    0.0    0.0     0.0    0.0
+     parseOp                             Aoc19_2                           library\Aoc19_2.hs:(61,1)-(73,45)                     2670          1    0.0    0.0     0.0    0.0
+      parseOp.binOp                      Aoc19_2                           library\Aoc19_2.hs:(69,5)-(73,45)                     2720          2    0.0    0.0     0.0    0.0
+       readInstruction                   Aoc19_2                           library\Aoc19_2.hs:(39,1)-(43,8)                      2723          4    0.0    0.0     0.0    0.0
+        >>=                              Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2724          4    0.0    0.0     0.0    0.0
+       >>=                               Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2721          2    0.0    0.0     0.0    0.0
+      >>=                                Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2671          1    0.0    0.0     0.0    0.0
+      readInstruction                    Aoc19_2                           library\Aoc19_2.hs:(39,1)-(43,8)                      2673          1    0.0    0.0     0.0    0.0
+       >>=                               Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2674          1    0.0    0.0     0.0    0.0
+      return                             Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2826          1    0.0    0.0     0.0    0.0
+     return                              Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2788          1    0.0    0.0     0.0    0.0
+ CAF:poly_k1_regt                        Aoc19_2                           <no location info>                                    1344          0    0.0    0.0     0.0    0.0
+  main.go                                Aoc19_2                           library\Aoc19_2.hs:130:7-102                          2632          0    0.0    0.0     0.0    0.0
+   >>=                                   Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2633          1    0.0    0.0     0.0    0.0
+ CAF:poly_k_regr                         Aoc19_2                           <no location info>                                    1342          0    0.0    0.0     0.0    0.0
+  main.go                                Aoc19_2                           library\Aoc19_2.hs:130:7-102                          2642          0    0.0    0.0     0.0    0.0
+   return                                Aoc19_2                           library\Aoc19_2.hs:35:3-32                            2643          1    0.0    0.0     0.0    0.0
+ CAF:poly_m1_regs                        Aoc19_2                           <no location info>                                    1343          0    0.0    0.0     0.0    0.0
+  main.go                                Aoc19_2                           library\Aoc19_2.hs:130:7-102                          2635          0    0.0    0.0     0.0    0.0
+   execOp                                Aoc19_2                           library\Aoc19_2.hs:(46,1)-(52,27)                     2636          1    0.0    0.0     0.0    0.0
+    >>=                                  Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2637          1    0.0    0.0     0.0    0.0
+ CAF:poly_m2_regu                        Aoc19_2                           <no location info>                                    1345          0    0.0    0.0     0.0    0.0
+  main.go                                Aoc19_2                           library\Aoc19_2.hs:130:7-102                          2599          0    0.0    0.0     0.0    0.0
+   execOp                                Aoc19_2                           library\Aoc19_2.hs:(46,1)-(52,27)                     2600          1    0.0    0.0     0.0    0.0
+    >>=                                  Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2601          1    0.0    0.0     0.0    0.0
+ CAF:program1                            Aoc19_2                           <no location info>                                    1340          0    0.0    0.0     0.0    0.0
+  program                                Aoc19_2                           library\Aoc19_2.hs:(81,1)-(86,27)                     2651          1    0.0    0.0     0.0    0.0
+ CAF:program2                            Aoc19_2                           <no location info>                                    1339          0    0.0    0.0     0.0    0.0
+  program                                Aoc19_2                           library\Aoc19_2.hs:(81,1)-(86,27)                     2652          0    0.0    0.0     0.0    0.0
+   program.go                            Aoc19_2                           library\Aoc19_2.hs:(83,5)-(86,27)                     2653          1    0.0    0.0     0.0    0.0
+    >>=                                  Aoc19_2                           library\Aoc19_2.hs:36:3-73                            2654          1    0.0    0.0     0.0    0.0
+ CAF:sIZEOF_INT                          Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-10                    1952          0    0.0    0.0     0.0    0.0
+  sIZEOF_INT                             Data.Primitive.MachDeps           Data\Primitive\MachDeps.hs:71:1-14                    2523          1    0.0    0.0     0.0    0.0
+ CAF:size42_reg8                         Aoc19_2                           <no location info>                                    1329          0    0.0    0.0     0.0    0.0
+  runMachine                             Aoc19_2                           library\Aoc19_2.hs:(89,1)-(94,17)                     2860          0    0.0    0.0     0.0    0.0
+   basicUnsafeNew                        Data.Vector.Unboxed.Base          Data\Vector\Unboxed\Base.hs:210:1176-1228             2861          0    0.0    0.0     0.0    0.0
+    basicUnsafeNew                       Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:(96,3)-(102,37)      2862          0    0.0    0.0     0.0    0.0
+     basicUnsafeNew.size                 Data.Vector.Primitive.Mutable     Data\Vector\Primitive\Mutable.hs:101:7-36             2863          1    0.0    0.0     0.0    0.0
+      sizeOf                             Data.Primitive.Types              Data\Primitive\Types.hs:135:1-25                      2864          1    0.0    0.0     0.0    0.0
+       sizeOf#                           Data.Primitive.Types              Data\Primitive\Types.hs:267:68-95                     2865          1    0.0    0.0     0.0    0.0
+        unI#                             Data.Primitive.Types              Data\Primitive\Types.hs:250:1-17                      2866          1    0.0    0.0     0.0    0.0
+ main                                    Aoc19_2                           library\Aoc19_2.hs:(129,1)-(132,77)                   2509          0    0.0    0.0     0.0    0.0

@@ -1,0 +1,77 @@
+# This YAML file describes your package. Stack will automatically generate a
+# Cabal file when you run `stack build`. See the hpack website for help with
+# this file: <https://github.com/sol/hpack>.
+name: AOC
+version: '0.0.0'
+github: "githubuser/AOC"
+license: MIT
+author: "Author name here"
+maintainer: "Author name here"
+# synopsis: A new Haskeleton package.
+# description: AOC is a new Haskeleton package.
+# category: Other
+
+extra-source-files:
+- CHANGELOG.md
+- LICENSE.md
+- package.yaml
+- README.md
+- stack.yaml
+
+ghc-options: -Wall
+
+library:
+  dependencies:
+  - mtl
+  - transformers
+  - base
+  - lens
+  - lens-regex-pcre
+  - containers
+  - unordered-containers
+  # - ad
+  - search-algorithms
+  - primitive
+  - vector
+  - massiv
+  source-dirs: library
+
+executables:
+  AOC:
+    source-dirs: executable
+    main: Main.hs
+    dependencies:
+    - mtl
+    - base
+    - AOC
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+benchmarks:
+  AOC-benchmarks:
+    source-dirs: benchmark
+    main: Main.hs
+    dependencies:
+    - base
+    - AOC
+    - criterion
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+tests:
+  AOC-test-suite:
+    source-dirs: test-suite
+    main: Main.hs
+    dependencies:
+    - base
+    - AOC
+    - tasty
+    - tasty-hspec
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
