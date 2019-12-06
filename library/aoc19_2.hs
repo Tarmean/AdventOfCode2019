@@ -11,6 +11,7 @@ import qualified Data.Vector.Unboxed.Mutable as U
 import qualified Data.Vector.Unboxed as V
 import Control.Applicative
 import Control.Monad.ST
+import GHC.Magic
 
 main :: IO ()
 main = do
@@ -73,15 +74,21 @@ type Offset = Int
 newtype M s a = M { runM :: forall b. U.MVector s Int -> Int -> (Int -> a -> ST s b) -> ST s b -> ST s b }
   deriving Functor
 instance Applicative (M b) where
+  {-# INLINE pure #-}
   pure = return
+  {-# INLINE (<*>) #-}
   M hf <*> M ha = M $ \v i c e -> hf v i (\i' f -> ha v  i' (\i'' a -> c i'' (f a)) e) e
 
+{-# INLINE cut #-}
 cut :: M b a -> M b (Maybe a)
 cut (M f) = M $ \v  i c _e -> f v  i (\i' a -> c i' (Just a)) (c i Nothing)
+
 instance Monad (M b) where
+
+  {-# INLINE return #-}
   return a = M (\_ i c _->  c i a)
   {-# INLINE (>>=) #-}
-  M ha >>= f = M $ \v  i c e -> ha v  i (\i' a -> runM (f a) v  i' c e) e 
+  M ha >>= f = M $ oneShot $ \v i c e -> ha v  i (oneShot $ \i' a -> runM (f a) v i' c e) e 
   
 
 class (Monad m) => Machine m where

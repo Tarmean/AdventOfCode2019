@@ -35,7 +35,6 @@ packages:
 # These entries can reference officially published versions as well as
 # forks / in-progress versions pinned to a git hash. For example:
 #
-# extra-deps:
 # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
@@ -46,7 +45,7 @@ extra-deps:
 - sgd-0.8.0.3@sha256:1afe2ee01c09029c023d79cbc729e839adf9ab3193dfa1021f3134140f90b121,2606
 - pcre-heavy-1.0.0.2@sha256:9a86bfc36aea455f0e51c4ef533b362c7252c876a06a88f38852c5d9f9cbf792,1628
 - primitive-0.6.4.0@sha256:5b6a2c3cc70a35aabd4565fcb9bb1dd78fe2814a36e62428a9a1aae8c32441a1,2079
-
+- memoize-0.8.1@sha256:2146197c639c126796d850cb4457b24cfeb6966d6d878825f855aafce31f8874,1601
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

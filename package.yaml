@@ -32,9 +32,11 @@ library:
   # - ad
   - text
   - search-algorithms
+  - ghc-prim
   - primitive
   - vector
   - massiv
+  - memoize
   source-dirs: library
 
 executables:

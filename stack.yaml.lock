@@ -39,6 +39,13 @@ packages:
       sha256: 5d5e591311664886e88ade3da6880c32adf0d1fe80c55f40a3c93bb91df8fdeb
   original:
     hackage: primitive-0.6.4.0@sha256:5b6a2c3cc70a35aabd4565fcb9bb1dd78fe2814a36e62428a9a1aae8c32441a1,2079
+- completed:
+    hackage: memoize-0.8.1@sha256:2146197c639c126796d850cb4457b24cfeb6966d6d878825f855aafce31f8874,1601
+    pantry-tree:
+      size: 473
+      sha256: 598188857937054d2cc4ac91aee580944d750e91120756507891d09e02056066
+  original:
+    hackage: memoize-0.8.1@sha256:2146197c639c126796d850cb4457b24cfeb6966d6d878825f855aafce31f8874,1601
 snapshots:
 - completed:
     size: 525662
