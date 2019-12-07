@@ -37,6 +37,7 @@ library:
   - vector
   - massiv
   - memoize
+  - conduit
   source-dirs: library
 
 executables:
