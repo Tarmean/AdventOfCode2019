@@ -9,52 +9,23 @@ import qualified Data.Conduit.Internal as I
 import qualified Data.Vector.Unboxed as V
 import Data.Maybe (fromJust)
 import IntCode
-import Control.Monad.Fail
-import Control.Monad
+import Data.Functor (void)
 import Data.List (maximumBy, permutations)
 import Data.Ord
 
-
 main :: IO ()
 main = do
-   let getMax = print . maximumBy (comparing snd)
-       f1 ls = done (yield 0 .| steps ls)
-       f2 ls = done $ whileIncreasing (yield 0 .| loop (steps ls))
-   getMax =<< candidates [0..4] f1
-   getMax =<< candidates [5..9] f2
-
-candidates :: [Int] -> ([Int] -> IO b) -> IO [([Int], b)]
-candidates vs f = sequence [fmap (ls,) (f ls) | ls <- permutations vs]
-
-steps :: (Foldable t, PrimMonad m, MonadFail m, Functor t) => t Int -> ConduitM Int Int m ()
-steps ls = foldr1 (.|) (fmap step ls)
-  where step x = withInit x .|  (() <$runMachine (program) v)
-
-withInit :: MachineIO m => Int -> m ()
-withInit a = output a >> forever (input >>= output)
-
-whileIncreasing :: (Ord i, Monad m, Show i) => ConduitT i o m () -> ConduitT i o m ()
-whileIncreasing m = slidingWindowC 2 .| takeWhileC p .| mapC last .| m
+   getMax =<< candidates [0..4] (\ls -> runConduit $ yield 0 .| steps ls .| lastC)
+   getMax =<< candidates [5..9] (\ls -> runConduit $ yield 0 .| loop (steps ls) .| lastC)
   where
-    p [a,b] = a < b
-    p _ = True
+    steps = foldr1 (.|) . fmap step
+    step x = leftover x >> void (runMachine program v)
+    candidates vs f = sequence [fmap (ls,) (f ls) | ls <- permutations vs]
+    getMax = print . maximumBy (comparing snd)
 
-done :: Monad m => ConduitT () i m () -> m (Maybe i)
-done a = runConduit (a .| getLast)
-  where
-    getLast = await >>= maybe (pure Nothing) go
-    go a0 = await >>= maybe (pure $ Just a0) go
-
-instance (MonadFail m, Monad m, l ~ Int, r ~ Int) => MachineIO (ConduitT l r m) where
+instance (Monad m, l ~ Int, r ~ Int) => MachineIO (ConduitT l r m) where
     input = fmap fromJust await
     output = yield
-instance (Machine m) => Machine (ConduitT l r m) where
-    readAt = lift . readAt
-    writeAt a b = lift (writeAt a b)
-    getIP = lift getIP
-    setIP = lift . setIP
-    modifyIP = lift . modifyIP
-    halt = lift halt
 
 loop :: Monad m => ConduitT i i m a -> ConduitT i i m a
 loop = unsealConduitT . go0 . sealConduitT
