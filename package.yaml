@@ -38,6 +38,7 @@ library:
   - massiv
   - memoize
   - conduit
+  - split
   source-dirs: library
 
 executables:

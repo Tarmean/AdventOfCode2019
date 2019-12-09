@@ -16,9 +16,9 @@ program = loop execOp
 {-# INLINE execOp #-}
 execOp :: (MonadFail m, Machine m, MachineIO m) => m ()
 execOp = do
-    (i, a:b:_) <- pTags <$> readInstruction
+    (i, a:b:c:_) <- pTags <$> readInstruction
     let
-      binOp p = store =<< liftA2 p (load a) (load b)
+      binOp p = store c =<< liftA2 p (load a) (load b)
       tagged p = \x y -> if p x y then 1 else 0
       jumpIf p = do
         l <- load a
@@ -33,12 +33,21 @@ execOp = do
       5 -> jumpIf (/=0)
       6 -> jumpIf (== 0)
       4 -> output =<< load a
-      3 -> store =<< input
+      3 -> store  a =<< input
+      9 -> do
+        o <- load a
+        base <- getRelativeBase
+        setRelativeBase (base+o)
       _ -> error ("unkown op" <> show i)
-store :: Machine m => Int -> m ()
-store v = do
+store :: Machine m => Int -> Int -> m ()
+store 0 v = do
     t <- readInstruction
     writeAt t v
+store 2 v = do
+    t <- readInstruction
+    b <- getRelativeBase
+    writeAt (b+t) v
+store i _ = error ("illegal store mode " <> ": " <> show i)
 
 pTags :: Int -> (Int, [Int])
 pTags a = (m0, go d0)
@@ -55,17 +64,21 @@ readInstruction = do
 load :: Machine m => Int -> m Int
 load 0 = readAt =<< readInstruction
 load 1 = readInstruction
+load 2 = do
+    i <- readInstruction
+    b <- getRelativeBase
+    readAt (b+i)
 load a = error ("Unknown tag" <> show a)
 
 runMachine :: (PrimMonad m) => M m a -> V.Vector Int -> m (V.Vector Int, Maybe a)
 runMachine m v = do
     vm <- V.thaw v
-    ma <- runM m vm  0 (\_i a -> pure (Just a)) (pure Nothing)
+    ma <- runM m vm  (0,0) (\_i a -> pure (Just a)) (pure Nothing)
     v' <- V.unsafeFreeze vm
     pure (v', ma)
 
 type Offset = Int
-newtype M m a = M { runM :: forall b. U.MVector (PrimState m) Int -> Int -> (Int -> a -> m b) -> m b -> m b }
+newtype M m a = M { runM :: forall b. U.MVector (PrimState m) Int -> ( Int,Int ) -> ((Int, Int) -> a -> m b) -> m b -> m b }
   deriving Functor
 instance Applicative (M b) where
   {-# INLINE pure #-}
@@ -93,9 +106,8 @@ instance Monad (M b) where
 class (Monad m) => Machine m where
     readAt :: Offset -> m Int
     writeAt :: Offset -> Int -> m ()
-    getIP :: m Offset
-    setIP :: Offset -> m ()
-    modifyIP :: (Offset -> Offset) -> m ()
+    getOffsets :: m (Offset, Offset)
+    setOffsets :: (Offset, Offset) -> m ()
     halt :: m a
 class (Monad m) => MachineIO m where
     input :: m Int
@@ -110,19 +122,26 @@ instance MachineIO IO where
     output = print
 instance MonadFail m => MonadFail (M m) where
    fail = lift . F.fail
+setIP :: Machine m => Int -> m ()
+setIP i = getOffsets >>= \(_,b) -> setOffsets (i,b)
+getIP :: Machine m => m Int
+getIP = fmap fst getOffsets
+setRelativeBase :: Machine m => Int -> m ()
+setRelativeBase b = getOffsets >>= \(i,_) -> setOffsets (i,b)
+getRelativeBase :: Machine m => m Int
+getRelativeBase = fmap snd getOffsets
 instance PrimMonad m => Machine (M m) where
   {-# INLINE readAt #-}
   {-# INLINE writeAt #-}
-  {-# INLINE getIP #-}
-  {-# INLINE setIP #-}
+  {-# INLINE getOffsets #-}
+  {-# INLINE setOffsets #-}
   -- elide bounds checks for 4x speedup and 5x allocation reduction
   -- this would result in UB if the input is malformed or there is a logic bug,
   -- though.
   -- Since the boundschecks really should stay enabled further optimizations don't really feel worthwhile
-  readAt o = M $ \v  i c _e -> c i =<< (U.read v o)
+  readAt o = M $ \v i c _e -> c i =<< (U.read v o)
   writeAt o j = M $ \v  i c _e -> c i =<< U.write v o j
-  getIP = M $ \_v  i c _e -> c i i
-  modifyIP f = M $ \_v  i c _e -> c (f i) ()
-  setIP o =  modifyIP (const o)
+  getOffsets = M $ \_v  i c _e -> c i i
+  setOffsets i = M $ \_v  _ c _e -> c i ()
   halt = M $ \_ _ _ e -> e
 
