@@ -33,11 +33,8 @@ execOp = do
       5 -> jumpIf (/=0)
       6 -> jumpIf (== 0)
       4 -> output =<< load a
-      3 -> store  a =<< input
-      9 -> do
-        o <- load a
-        base <- getRelativeBase
-        setRelativeBase (base+o)
+      3 -> store a =<< input
+      9 -> setRelativeBase =<< liftA2 (+) (load a) getRelativeBase
       _ -> error ("unkown op" <> show i)
 store :: Machine m => Int -> Int -> m ()
 store 0 v = do
