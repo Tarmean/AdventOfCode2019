@@ -14,14 +14,14 @@ import Data.List (maximumBy, permutations)
 import Data.Ord
 
 main :: IO ()
-main = do
-   getMax =<< candidates [0..4] (\ls -> runConduit $ yield 0 .| steps ls .| lastC)
-   getMax =<< candidates [5..9] (\ls -> runConduit $ yield 0 .| loop (steps ls) .| lastC)
-  where
-    steps = foldr1 (.|) . fmap step
-    step x = leftover x >> void (runMachine program v)
-    candidates vs f = sequence [fmap (ls,) (f ls) | ls <- permutations vs]
-    getMax = print . maximumBy (comparing snd)
+    main = do
+       getMax =<< candidates [0..4] (\ls -> runConduit $ yield 0 .| steps ls .| lastC)
+       getMax =<< candidates [5..9] (\ls -> runConduit $ yield 0 .| loop (steps ls) .| lastC)
+      where
+        steps = foldr1 (.|) . fmap step
+        step x = leftover x >> void (runMachine program v)
+        candidates vs f = sequence [fmap (ls,) (f ls) | ls <- permutations vs]
+        getMax = print . maximumBy (comparing snd)
 
 instance (Monad m, l ~ Int, r ~ Int) => MachineIO (ConduitT l r m) where
     input = fmap fromJust await
