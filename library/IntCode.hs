@@ -1,29 +1,74 @@
 {-#Language RankNTypes #-}
+{-#Language KindSignatures #-}
+{-#Language TypeFamilies #-}
+{-#Language QuantifiedConstraints, ConstraintKinds #-}
+{-#Language UndecidableInstances #-}
+{-#Language FunctionalDependencies #-}
 {-#Language GeneralizedNewtypeDeriving, DeriveFunctor #-}
-module IntCode (program, execOp, MachineIO(..), Machine(..), runMachine) where
-import qualified Data.Vector.Unboxed.Mutable as U
-import qualified Data.Vector.Unboxed as V
+{-#Language FlexibleInstances #-}
+module IntCode (program, runMachine, Machine, MachineIO(..), runS, memory, yieldThis, awaitThis, I.sealConduitT, Mac) where
 import Control.Applicative
+import Data.Foldable (toList)
 import Control.Monad.Trans
+import Control.Lens
 import Control.Monad
 import Control.Monad.Fail as F
-import Control.Monad.Primitive
-import GHC.Magic
+import Control.Monad.State
+import Control.Monad.Writer
+import Control.Monad.Trans.Maybe
+import qualified Data.IntMap as M
+import Data.Conduit
+import qualified Data.Conduit.Internal as I
+import Data.Maybe (fromJust)
 
-program :: (MonadFail m, Machine m, MachineIO m, Alternative m) => m ()
+type Mac m a = I.SealedConduitT Int Int m a
+instance (Monad m, l ~ Int, r ~ Int) => MachineIO (ConduitT l r m) where
+    input = fmap fromJust await
+    output = yield
+
+yieldThis :: (MonadTrans n, Monad (n m), Alternative (n m), Monad m) => l -> I.SealedConduitT l r m a -> n m (I.SealedConduitT l r m a)
+yieldThis _ (I.SealedConduitT (I.Done _)) = empty
+yieldThis _ (I.SealedConduitT (I.HaveOutput _ _)) = empty
+yieldThis i (I.SealedConduitT (I.NeedInput f _)) = pure (I.SealedConduitT (f i))
+yieldThis i (I.SealedConduitT (I.PipeM msrc)) = lift msrc >>= yieldThis i . I.SealedConduitT
+yieldThis i (I.SealedConduitT (I.Leftover a l)) = fmap addLeftover (yieldThis i (I.SealedConduitT a))
+  where addLeftover (I.SealedConduitT r) = I.SealedConduitT (I.Leftover r l)
+awaitThis :: (MonadTrans n, Monad (n m), Alternative (n m), Monad m) => I.SealedConduitT l r m a -> n m (r, I.SealedConduitT l r m a)
+awaitThis (I.SealedConduitT (I.Done _)) = empty
+awaitThis (I.SealedConduitT (I.NeedInput _ _)) = empty
+awaitThis (I.SealedConduitT (I.HaveOutput src x)) = pure ( x,I.SealedConduitT src)
+awaitThis (I.SealedConduitT (I.PipeM msrc)) = lift msrc >>= awaitThis . I.SealedConduitT
+awaitThis (I.SealedConduitT (I.Leftover a l)) = fmap addLeftover (awaitThis (I.SealedConduitT a))
+  where addLeftover (r,I.SealedConduitT c) = ( r,I.SealedConduitT (I.Leftover c l))
+
+instance Monad m => MachineIO (S m) where
+    input = S $ do
+        ls <- get
+        let (x:xs) = ls
+        put xs
+        pure x
+    output a = S (tell [a])
+newtype S m a = S (StateT [Int] (WriterT [Int] m) a)
+  deriving (Functor, Monad, Applicative)
+runS :: Monad m => S m a  -> [Int] -> m [Int]
+runS (S m) a= execWriterT (runStateT m a)
+
+
+program :: (Machine s m, MachineIO m, Alternative m) => m ()
 program = loop execOp
 
 {-# INLINE execOp #-}
-execOp :: (MonadFail m, Machine m, MachineIO m) => m ()
+execOp :: (Machine s m, MachineIO m) => m ()
 execOp = do
-    (i, a:b:c:_) <- pTags <$> readInstruction
+    (i, flags) <- pTags <$> readInstruction
+    let (a:b:c:_) = flags
     let
       binOp p = store c =<< liftA2 p (load a) (load b)
       tagged p = \x y -> if p x y then 1 else 0
       jumpIf p = do
         l <- load a
         t <- load b
-        when (p l) (setIP t)
+        when (p l) (ip .= t)
     case i of
       99 -> halt
       1 -> binOp (+)
@@ -34,16 +79,16 @@ execOp = do
       6 -> jumpIf (== 0)
       4 -> output =<< load a
       3 -> store a =<< input
-      9 -> setRelativeBase =<< liftA2 (+) (load a) getRelativeBase
+      9 -> (relativeBase .=) =<< liftA2 (+) (load a) (use relativeBase)
       _ -> error ("unkown op" <> show i)
-store :: Machine m => Int -> Int -> m ()
+store :: Machine s m => Int -> Int -> m ()
 store 0 v = do
     t <- readInstruction
-    writeAt t v
+    memory t .= v
 store 2 v = do
     t <- readInstruction
-    b <- getRelativeBase
-    writeAt (b+t) v
+    b <- use relativeBase
+    memory (b+t) .=  v
 store i _ = error ("illegal store mode " <> ": " <> show i)
 
 pTags :: Int -> (Int, [Int])
@@ -52,93 +97,69 @@ pTags a = (m0, go d0)
    (d0, m0) = divMod a 100
    go i = let (d,m) = divMod i 10 in m : go d
 {-# INLINE readInstruction #-}
-readInstruction :: Machine m => m Offset
+readInstruction :: Machine s m => m Offset
 readInstruction = do
-  i <- getIP
-  setIP (i+1)
-  readAt i
+  i <- use ip
+  ip .= (i+1)
+  use (memory i)
 
-load :: Machine m => Int -> m Int
-load 0 = readAt =<< readInstruction
+load :: (Machine s m) => Int -> m Int
+load 0 = readInstruction >>= (use . memory)
 load 1 = readInstruction
 load 2 = do
     i <- readInstruction
-    b <- getRelativeBase
-    readAt (b+i)
+    b <- use relativeBase
+    use $ memory (b+i)
 load a = error ("Unknown tag" <> show a)
 
-runMachine :: (PrimMonad m) => M m a -> V.Vector Int -> m (V.Vector Int, Maybe a)
+runMachine :: (Foldable f, Monad m) => M m a -> f Int -> m (Maybe a, (Int, Int, M.IntMap Int))
 runMachine m v = do
-    vm <- V.thaw v
-    ma <- runM m vm  (0,0) (\_i a -> pure (Just a)) (pure Nothing)
-    v' <- V.unsafeFreeze vm
-    pure (v', ma)
+    let vm = M.fromList (zip [0..] (toList v))
+    ma <- runStateT (runMaybeT (runM m)) (0,0,vm)  
+    pure  ma
 
 type Offset = Int
-newtype M m a = M { runM :: forall b. U.MVector (PrimState m) Int -> ( Int,Int ) -> ((Int, Int) -> a -> m b) -> m b -> m b }
-  deriving Functor
-instance Applicative (M b) where
-  {-# INLINE pure #-}
-  pure = return
-  {-# INLINE (<*>) #-}
-  M hf <*> M ha = M $ \v i c e -> hf v i (\i' f -> ha v  i' (\i'' a -> c i'' (f a)) e) e
-
-instance PrimMonad b => Alternative (M b) where
-  empty = halt
-  M a <|> M b = M $ \v i c e -> a v i c (b v i c e)
-instance PrimMonad b => MonadPlus (M b) where
-  mzero = empty
-  mplus = (<|>) 
-{-# INLINE loop #-}
+newtype M m a = M { runM :: MaybeT (StateT (Int, Int, M.IntMap Int) m) a }
+  deriving (Functor, Monad, Applicative, Alternative, MonadPlus)
+instance(Monad m, (Int, Int, M.IntMap Int)~s, MachineState s) => MonadState s (M m) where
+   get = M get
+   put = M . put
 loop :: (Alternative m) => m a -> m ()
 loop a = go <|> pure ()
   where go = a *> go
 
-instance Monad (M b) where
-  {-# INLINE return #-}
-  return a = M (\_ i c _->  c i a)
-  {-# INLINE (>>=) #-}
-  M ha >>= f = M $ oneShot $ \v i c e -> ha v  i (oneShot $ \i' a -> runM (f a) v i' c e) e 
-
-class (Monad m) => Machine m where
-    readAt :: Offset -> m Int
-    writeAt :: Offset -> Int -> m ()
-    getOffsets :: m (Offset, Offset)
-    setOffsets :: (Offset, Offset) -> m ()
+class MachineState s where
+    memory :: Offset -> Lens' s Int
+    ip :: Lens' s Offset
+    relativeBase :: Lens' s Offset
+instance MachineState (Int, Int, M.IntMap Int) where
+  memory o = _3 . at o . non 0
+  ip = _1
+  relativeBase = _2
+class Monad m => MonadHalt m where
     halt :: m a
+class (MonadHalt m, MonadState s m, MachineState s) => Machine s m where
 class (Monad m) => MachineIO m where
     input :: m Int
     output :: Int -> m ()
-instance MonadTrans M where
-    lift m = M $ \_v i c _e -> c i =<< m
 instance MachineIO m => MachineIO (M m) where
     input = lift input
     output = lift . output
 instance MachineIO IO where
     input = readIO =<< getLine
     output = print
+instance MonadTrans M where
+  lift = M . lift . lift
+
 instance MonadFail m => MonadFail (M m) where
    fail = lift . F.fail
-setIP :: Machine m => Int -> m ()
-setIP i = getOffsets >>= \(_,b) -> setOffsets (i,b)
-getIP :: Machine m => m Int
-getIP = fmap fst getOffsets
-setRelativeBase :: Machine m => Int -> m ()
-setRelativeBase b = getOffsets >>= \(i,_) -> setOffsets (i,b)
-getRelativeBase :: Machine m => m Int
-getRelativeBase = fmap snd getOffsets
-instance PrimMonad m => Machine (M m) where
-  {-# INLINE readAt #-}
-  {-# INLINE writeAt #-}
-  {-# INLINE getOffsets #-}
-  {-# INLINE setOffsets #-}
-  -- elide bounds checks for 4x speedup and 5x allocation reduction
+instance Monad m => Machine (Int, Int, M.IntMap Int) (M m) where
+instance Monad m => MonadHalt (M m) where
+  halt = empty
+-- instance (Monad m, MonadHalt m) => MonadHalt (ConduitT i o m) where
+--   halt = lift halt
+--   -- elide bounds checks for 4x speedup and 5x allocation reduction
   -- this would result in UB if the input is malformed or there is a logic bug,
   -- though.
   -- Since the boundschecks really should stay enabled further optimizations don't really feel worthwhile
-  readAt o = M $ \v i c _e -> c i =<< (U.read v o)
-  writeAt o j = M $ \v  i c _e -> c i =<< U.write v o j
-  getOffsets = M $ \_v  i c _e -> c i i
-  setOffsets i = M $ \_v  _ c _e -> c i ()
-  halt = M $ \_ _ _ e -> e
 

@@ -6,60 +6,89 @@ import qualified Data.Map as M
 import qualified Data.Text as T
 import Control.Arrow hiding (loop)
 import Control.Lens.Regex.Text
-import Data.List.Split
+import Data.List.Split hiding (sepBy)
 import Control.Lens
+import Text.Megaparsec as P
+import Text.Megaparsec.Char as P
+import Data.Void
+import Data.Char
+type Parser a = Parsec Void T.Text a
+runParsec :: T.Text -> Parser a -> a
+runParsec t p = case runParser p "" t of
+   Right a -> a
+   Left e -> error (errorBundlePretty e)
+lexeme :: Parser a -> Parser a
+lexeme p = p <* takeWhileP (Just "space") isSpace
+
+pDefs :: Parser [(T.Text, Definition)]
+pDefs = many pDefinition <* eof
+pAmount :: Parser (T.Text, Integer)
+pAmount = flip (,) <$> lexeme integer <*> lexeme ident
+  where
+    ident = takeWhile1P (Just "letter") isLetter
+    integer = read . T.unpack <$> takeWhile1P (Just "digits") isDigit
+data Definition = Definition [(T.Text, Integer)] Integer
+  deriving Show
+pDefinition :: Parser (T.Text, Definition)
+pDefinition = do
+    rhs <- pAmount `sepBy1` (lexeme $ char ',')
+    lexeme (string "=>")
+    (key, amount) <- pAmount
+    pure (key, Definition rhs amount)
+
+
 type Recipes = M.Map T.Text ([(T.Text, Integer)], Integer)
 type Reqs = M.Map T.Text Integer
 
-solve i = loop test (M.singleton "FUEL" i) M.! "ORE"
-main = do
-  print $ solve 1
-  print $ binSearch 1 1000000000000 solve (compare 1000000000000)
+-- solve i = loop test (M.singleton "FUEL" i) M.! "ORE"
+-- main = do
+--   print $ solve 1
+--   print $ binSearch 1 1000000000000 solve (compare 1000000000000)
 
-lowerReqs rep = merge . map (M.fromList . step) . M.toList
-  where
-    step (k,a)
-      | Just (inp, o) <- rep M.!? k
-      , a > 0
-      = let (times, rest) = a `inSteps` o
-            base = map (second (*times)) inp
-        in  (k, -rest) : base
-    step (k,0) = []
-    step (k,a) = [(k,a)]
-inSteps a b
-  | y > 0 = (x+1, b - y)
-  | y == 0 = (x,0)
-  where (x,y) = a `divMod` b
-merge a = foldr (M.unionWith (+)) M.empty $ a
+-- lowerReqs rep = merge . map (M.fromList . step) . M.toList
+--   where
+--     step (k,a)
+--       | Just (inp, o) <- rep M.!? k
+--       , a > 0
+--       = let (times, rest) = a `inSteps` o
+--             base = map (second (*times)) inp
+--         in  (k, -rest) : base
+--     step (k,0) = []
+--     step (k,a) = [(k,a)]
+-- inSteps a b
+--   | y > 0 = (x+1, b - y)
+--   | y == 0 = (x,0)
+--   where (x,y) = a `divMod` b
+-- merge a = foldr (M.unionWith (+)) M.empty $ a
 
-binSearch i j f p
-  | j < i = Left (i,j)
-binSearch i j f p = case p (f k) of
-    LT -> binSearch i (k-1) f p
-    EQ -> Right k
-    GT -> binSearch (k+1) j f p
-  where
-     k = (i + j) `div` 2
+-- binSearch i j f p
+--   | j < i = Left (i,j)
+-- binSearch i j f p = case p (f k) of
+--     LT -> binSearch i (k-1) f p
+--     EQ -> Right k
+--     GT -> binSearch (k+1) j f p
+--   where
+--      k = (i + j) `div` 2
 
-loop rep req0 = go req0
-  where
-    go r
-      | r == r' = r
-      | otherwise = go r'
-      where r' = lowerReqs rep r
+-- loop rep req0 = go req0
+--   where
+--     go r
+--       | r == r' = r
+--       | otherwise = go r'
+--       where r' = lowerReqs rep r
        
        
-parseLS :: T.Text -> Recipes
-parseLS = M.fromList . map parseRecipe . T.lines
+-- parseLS :: T.Text -> Recipes
+-- parseLS = M.fromList . map parseRecipe . T.lines
 
-parseRecipe t = (k, (rhs, amount))
-  where
-    p = t ^.. [regex|(\d+) (\w+)|] . groups . to toPairs
-    toPairs [a,b] = (b,read (T.unpack a))
-    rhs = init p
-    (k,amount) = last p
-test :: Recipes
-test = parseLS $ T.unlines [
+-- parseRecipe t = (k, (rhs, amount))
+--   where
+--     p = t ^.. [regex|(\d+) (\w+)|] . groups . to toPairs
+--     toPairs [a,b] = (b,read (T.unpack a))
+--     rhs = init p
+--     (k,amount) = last p
+test :: T.Text
+test =  T.unlines [
     "1 GZJM, 2 CQFGM, 20 SNPQ, 7 RVQG, 3 FBTV, 27 SQLH, 10 HFGCF, 3 ZQCH => 3 SZCN",
     "4 FCDL, 6 NVPW, 21 GZJM, 1 FBTV, 1 NLSNB, 7 HFGCF, 3 SNPQ => 1 LRPK",
     "15 FVHTD, 2 HBGFL => 4 BCVLZ",
@@ -104,7 +133,7 @@ test = parseLS $ T.unlines [
     "2 PGZGQ, 1 VCKL => 4 ZPNKQ",
     "3 FBTV, 3 JMTG => 5 QLHKT",
     "1 ZGZST, 2 LCZBD => 7 GFGS",
-    "2 RVQG => 4 ZQCH",
+    "2 RVQG > 4 ZQCH",
     "1 ZPNKQ => 5 LBQV",
     "3 LWBQ => 8 XJBL",
     "1 LBQV, 9 JCDML => 3 GWBDR",
