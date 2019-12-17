@@ -18,3 +18,5 @@ adjacent :: (Num b, Enum b, Eq b) => (b, b) -> [(b, b)]
 adjacent (px, py) = [(px,py-1), (px+1, py), (px, py+1), (px-1, py)]
 
 manhattan (a,b) (x,y) = abs (a-x) + abs (b-y)
+left (a,b) = (-b, a)
+right (a,b) = (b, -a)

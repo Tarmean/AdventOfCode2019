@@ -6,7 +6,7 @@
 {-#Language FunctionalDependencies #-}
 {-#Language GeneralizedNewtypeDeriving, DeriveFunctor #-}
 {-#Language FlexibleInstances #-}
-module IntCode (program, runMachine, Machine, MachineIO(..), runS, memory, yieldThis, awaitThis, I.sealConduitT, Mac) where
+module IntCode (program, runMachine, Machine, MachineIO(..), runS, runP, memory, yieldThis, awaitThis, I.sealConduitT, Mac) where
 import Control.Applicative
 import Data.Foldable (toList)
 import Control.Monad.Trans
@@ -18,6 +18,7 @@ import Control.Monad.Writer
 import Control.Monad.Trans.Maybe
 import qualified Data.IntMap as M
 import Data.Conduit
+import Data.Functor.Identity
 import qualified Data.Conduit.Internal as I
 import Data.Maybe (fromJust)
 
@@ -52,6 +53,8 @@ newtype S m a = S (StateT [Int] (WriterT [Int] m) a)
   deriving (Functor, Monad, Applicative)
 runS :: Monad m => S m a  -> [Int] -> m [Int]
 runS (S m) a= execWriterT (runStateT m a)
+runP :: S Identity a  -> [Int] -> [Int]
+runP (S m) a= execWriter (runStateT m a)
 
 
 program :: (Machine s m, MachineIO m, Alternative m) => m ()

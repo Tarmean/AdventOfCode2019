@@ -20,26 +20,36 @@ type Pos = (Int, Int)
 data S = S { _position :: Pos, _board :: (M.Map Pos Tile) }
 makeLenses ''S
 
+-- main2 = do
+--   let
+--     s0 = (S (0,0) (M.singleton (0,0) Open))
+--     (S _ b) = execState (runSearchStrict $ loop2 (sealConduitT $ runMachine program inp) (0,0)) s0
+--   print b
+--
+s0 = (S (0,0) (M.singleton (0,0) Open))
+computer :: (MonadState S m) => (Int, Int) -> Search (Int, Int) m (Pos, Int)
+computer p0 = unique p0 >> loop2 1 (sealConduitT $ runMachine program inp) p0
 main = do
   let 
-    s0 = (S (0,0) (M.singleton (0,0) Open))
     (S _ b) = execState (runMaybeT $ loop $ sealConduitT $ runMachine program inp) s0
     Just (cost, path) = search (== Just Goal) (S (0,0) b)
   print cost
-  let goalPos = last path
-      bfs0 = O b S.empty (S.singleton goalPos)
-  print $ pred $ length $ takeWhile (not . S.null . oFrontier) $ iterate bfsStep bfs0
+  -- let goalPos = last path
+  --     bfs0 = O b S.empty (S.singleton goalPos)
+  -- print $ pred $ length $ takeWhile (not . S.null . oFrontier) $ iterate bfsStep bfs0
 
-loop2 r pos = fromList [1..4] >>- \dir -> do
+loop2 :: (MonadState S m) => Int -> Mac m a -> Pos -> Search Pos m (Pos, Int)
+loop2 dist r pos = fromList [1,2,3,4] >>= \dir -> do
         let pos' = pos `plus` toStep dir
+        -- liftIO $ print pos'
         unique pos'
         (o,r') <- awaitThis =<< yieldThis dir r
         case o of
-          2 -> board . at pos' ?= Wall
-          1 -> board . at pos' ?= Goal
-          0 -> do
+          0 -> board . at pos' ?= Wall >> empty
+          2 -> board . at pos' ?= Goal >> (pure (pos', dist) <|> loop2 (dist+1) r' pos')
+          1 -> do
             board . at pos' ?= Open
-            loop2 r' pos'
+            pure (pos', dist) <|> loop2 (dist+1) r' pos'
 
 
 loop :: Monad m => Mac (StateT S m) a -> MaybeT (StateT S m) ()
@@ -87,6 +97,7 @@ showB t b = mapM_ putStrLn [[ out (x,y) | x <- [-25..20]] | y <- [-20..30]]
     (O _ s _) = iterate bfsStep (O b S.empty (S.singleton goal)) !! t
     goal = fst . head . filter ((==Goal) . snd) $ M.toList b
     out p
+      | p == (0,0) = '%'
       | S.member p s = '='
       | otherwise = case M.findWithDefault Open p b of
         Open -> ' '
