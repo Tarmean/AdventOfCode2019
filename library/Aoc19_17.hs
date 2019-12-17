@@ -12,24 +12,18 @@ import Data.Ord
 
 cover :: [Step] -> [([Step], [Step], [Step], [Char])]
 cover inp = do
-    let covers = S.empty
+    let offsetsCovered = S.empty
     -- sA is a substring of the input data
-    -- lA is a list of indices sA is in the input
+    -- lA is a list of indices sA occurs at in the input
     [(sA, lA), (sB, lB), (sC, lC)] <- choices 3 (getData inp)
-    -- we might not want to apply some pattern in all places possible
-    -- this tries all combinations of using/not using
-    lA' <- selection lA
-    -- check that none of the selected places is already taken
-    -- and mark them in the map
-    covers <- markSelection (length sA) lA' covers
+    -- check that none of the selected places is already covered & mark them as taken
+    offsetsCovered <- markSelection (length sA) lA offsetsCovered
     -- repeat for b and c
-    lB' <- selection lB
-    covers <- markSelection (length sB) lB' covers
-    lC' <- selection lC
-    covers <- markSelection (length sC) lC' covers
-    -- check that we have selections for all inputs
-    guard (S.size covers == length inp)
-    let keys = M.elems $ M.fromList (map (,'A') lA' <> map (,'B')lB' <> map (,'C') lC')
+    offsetsCovered <- markSelection (length sB) lB offsetsCovered
+    offsetsCovered <- markSelection (length sC) lC offsetsCovered
+    -- check that we generate the total input
+    guard (S.size offsetsCovered == length inp)
+    let keys = M.elems $ M.fromList (map (,'A') lA <> map (,'B')lB <> map (,'C') lC)
     pure (sA, sB, sC, keys)
 
 data SuffixTree a = SuffixTree (M.Map a (SuffixTree a)) [Int]
@@ -49,9 +43,9 @@ suffixList (SuffixTree m _) = concatMap (uncurry go) (M.toList m)
     go k (SuffixTree m' i) =  (k, i) : concatMap (uncurry go) (M.toList m')
 
 getData :: Ord a => [a] -> [([a], [Int])]
-getData = L.sortBy (comparing $ \(a,b) -> Down $ length a * length b) . filter (p . length . fst) . suffixList . toSuffixTree
+getData = L.sortBy (comparing $ \(a,b) -> Down $ min (length a) (length b)) . filter (p . length . fst) . suffixList . toSuffixTree
   where
-   p i = i >= 2 && i <= 4
+   p _i = True -- i <= 6 && i >= 2
 
 data Step = Step Char Int
   deriving (Eq, Ord, Show)
@@ -63,9 +57,6 @@ markSelection len ls m
   | otherwise = pure $ foldr S.insert m idxs
   where idxs = [j | i <- ls, j <- [i..i+len - 1]]
 
-selection :: [a] -> [[a]]
-selection (x:xs) = ((x:) <$> selection xs) <|> selection xs
-selection [] = [[]]
 testData :: [Step]
 testData = [Step 'R' 4, Step 'R' 12, Step 'R' 10, Step 'L' 12, Step 'L' 12, Step 'R' 4, Step 'R' 12, Step 'L' 12, Step 'R' 4, Step 'R' 12, Step 'L' 12, Step 'L' 8, Step 'R' 10, Step 'L' 12, Step 'L' 8, Step 'R' 10, Step 'R' 4, Step 'R' 12, Step 'R' 10, Step 'L' 12, Step 'L' 12, Step 'R' 4, Step 'R' 12, Step 'L' 12, Step 'R' 4, Step 'R' 12, Step 'L' 12, Step 'L' 8, Step 'R' 10, Step 'R' 4, Step 'R' 12, Step 'R' 10, Step 'L' 12]
 choices :: Int -> [a] -> [[a]]
@@ -75,11 +66,14 @@ choices _ [] = []
 
 
 
+printSolution (a,b,c,m) = mapM_ putStrLn [m, concatMap printStep a, concatMap printStep b,concatMap printStep c]
+  where printStep (Step c i) = c : show i
 main :: IO ()
 main = do
-   putStrLn $ map toEnum $ runP (runMachine program code) []
-   print $ countNodes mapData
-   print $ last $ runP (runMachine (memory 0 .= 2 >> program) code) solve2
+   mapM_ printSolution (take 200 $ cover testData)
+   -- putStrLn $ map toEnum $ runP (runMachine program code) []
+   -- print $ countNodes mapData
+   -- print $ last $ runP (runMachine (memory 0 .= 2 >> program) code) solve2
 solve2 :: [Int]
 solve2 = map fromEnum $ unlines $ [
             "A,B,A,B,C,C,B,A,B,C",
