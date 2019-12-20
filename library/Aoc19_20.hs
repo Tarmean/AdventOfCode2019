@@ -3,22 +3,23 @@ module Aoc19_20 where
 import Grid
 import Data.Char
 import qualified Data.Map as M
+import Data.Maybe (maybeToList)
 
 data Portal = P Char Char InOut
   deriving (Eq, Ord, Show)
 
+main = print solve1 >> print solve2
 parseSpot m p '.'  = case spots of
   [a] -> POI a
   [] -> Passage
   where
     spots
       = [ P a b (inOut p)
-        | step <- adjacent (0,0)
-        , (Just a:Just b:_) <- pure (getSpots step)
-        , isUpper a
-        , isUpper b
+        | dir <- adjacent (0,0)
+        , [a, b] <- pure (getText dir)
         ]
-    getSpots dir = fixOrder dir $ take 2 $ tail $ map (m M.!?) (iterate (plusPoint dir) p)
+    steps dir = fixOrder dir $ take 2 $ tail $ iterate (plusPoint dir) p
+    getText = filter isUpper . map (m M.!) . steps
     isBackwards p = p `elem` [ (-1, 0), (0, -1) ]
     fixOrder p = if isBackwards p then reverse else id
 parseSpot _ _ _ = Wall

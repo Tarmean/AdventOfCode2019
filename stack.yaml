@@ -46,6 +46,7 @@ extra-deps:
 - pcre-heavy-1.0.0.2@sha256:9a86bfc36aea455f0e51c4ef533b362c7252c876a06a88f38852c5d9f9cbf792,1628
 - primitive-0.6.4.0@sha256:5b6a2c3cc70a35aabd4565fcb9bb1dd78fe2814a36e62428a9a1aae8c32441a1,2079
 - memoize-0.8.1@sha256:2146197c639c126796d850cb4457b24cfeb6966d6d878825f855aafce31f8874,1601
+- suffixtree-0.2.2.1@sha256:cebcb1310034a6a4d5f9febececb1a8c28fe411376c6fca0faf1b4b0cdf4c176,1095
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

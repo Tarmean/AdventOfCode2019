@@ -1,74 +1,110 @@
 {-# Language ScopedTypeVariables #-}
+{-# Language FlexibleInstances, MultiParamTypeClasses #-}
+{-# Language GeneralizedNewtypeDeriving #-}
 module Aoc19_18 where
 import qualified Data.Set as S
-import qualified Data.IntSet as I
 import qualified Data.Map.Strict as M
 import Data.Char
 import Grid hiding (Spot)
 import Control.Applicative
 import Data.Functor.Compose
 import Data.Monoid
+import Data.Bits
 
 main = do
+  -- takes ~1 second with my laptop set at 4.2 ghz
   mapM_ print $  solve dat1
-  -- mapM_ print $ solve dat2
+  -- takes 200 second -_-'
+  mapM_ print $ solve dat2
 
+newtype KeySet = KeySet { fromSet :: Int}
+  deriving (Eq, Ord, Bits)
+instance Semigroup KeySet where
+  (KeySet l) <> KeySet r = KeySet (l .|. r)
+instance Monoid KeySet where
+  mempty = KeySet 0
+newtype Key = K { unKey :: Int}
+  deriving (Eq, Ord)
+keySetSize :: KeySet -> Int
+keySetSize (KeySet k) = popCount k
+instance Show KeySet where
+  show k = "toKeySet " <> (show $ printKeys k)
+instance Show Key where
+    show k = "toKey " <> (show $ fromKey k)
+toKeySet :: Key -> KeySet
+toKeySet k = insertKey k mempty
+fromKey :: Key -> Char
+fromKey (K i) = toEnum (fromEnum 'a' + i)
+toKey :: Char -> Key
+toKey c
+  | isLower c = K $ fromEnum c - fromEnum 'a'
+  | otherwise = undefined
+  
+fromKeyList = foldr insertKey mempty . map toKey
+insertKey :: Key -> KeySet -> KeySet
+insertKey (K c) (KeySet b) = KeySet $ b .|. (1 `shiftL` c)
+hasKey :: Key -> KeySet -> Bool
+hasKey k s = 0 /= fromSet (insertKey k mempty .&. s)
+isSubsetOf :: KeySet -> KeySet -> Bool
+isSubsetOf (KeySet s) (KeySet k) = complement s .|. k == -1
+
+printKeys :: KeySet -> String
+printKeys a = map fromKey $ filter (flip hasKey a) (map toKey ['a' .. 'z'])
 replaceOne :: forall a r. [a] -> (a -> (a -> [a]) -> r) -> [r]
 replaceOne xs cont = go id xs
   where
     go :: ([a] -> [a]) -> [a] -> [r]
     go p (x:xs) = cont x (p . (:xs)) : go ((x:) . p) xs
     go _ [] = []
-data Spot = Key Char | Lock Char | Start (Int, Int)
+data Spot = Key Key | Lock Key | Start (Int, Int)
   deriving (Eq, Ord, Show)
 parseSpot _ '#' = Wall
 parseSpot _ '.' = Passage
 parseSpot i '@' = POI (Start i)
 parseSpot _ c
-  | isLower c = POI (Key c)
-  | isUpper c = POI (Lock c)
+  | isLower c = POI (Key (toKey c))
+  | isUpper c = POI (Lock $ toKey $ toLower c)
   
-toState :: Graph Spot -> (S.Set Spot, I.IntSet)
-toState graph = (S.fromList [Start p | Start p <- M.keys (unGraph graph)], I.empty)
+toState :: Graph Spot -> (S.Set Spot, KeySet)
+toState graph = (S.fromList [Start p | Start p <- M.keys (unGraph graph)], mempty)
 
-type Key = Char
-metaSearch :: Graph Spot -> M.Map Spot [(Key, Int, I.IntSet)] 
+metaSearch :: Graph Spot -> M.Map Spot [(Key, Int, KeySet)] 
 metaSearch graph = M.fromList [(a, helper a) | a <- M.keys (unGraph graph), isSource a]
   where
     isSource (Lock _) = False
     isSource _ = True
-    helper p = concatMap flatten $ dijkstra (0, I.empty) mergeCost step p
+    helper p = concatMap flatten $ dijkstra (0, mempty) mergeCost step p
     flatten (Key c, (cost, locks)) = [(c, cost, locks)]
     flatten _ = []
     step a = [(a', (cost, getKey a)) | (a', cost) <- neighborsG graph a]
-    getKey (Lock c) = I.singleton (fromEnum c)
-    getKey _ = I.empty
+    getKey (Lock c) = toKeySet c
+    getKey _ = mempty
     mergeCost (i, s) (j, t) = (i+j, s <> t)
-solve inp = filter isDone $ dijkstra 0 (+) step startState
+solve inp = head $ filter isDone $ aStar heuristic 0 (+) step startState
+
   where
     metaTable = metaSearch graph
 
     minDist = minimum $ map (\(_, c, _) -> c) (concat $ M.elems $ metaTable)
-    heuristic (bots, keys) = (keyCount - I.size keys) * minDist
+    heuristic (bots, keys) = (keyCount - keySetSize keys) * minDist
 
-    isDone = ((>= 12) . I.size . snd . fst)
+    isDone = ((>= keyCount) . keySetSize . snd . fst)
     keyCount = length [ a  | Key a <- M.keys (unGraph graph)]
     graph = parseGrid inp parseSpot
     startState = toState graph
 
-    step :: (S.Set Spot, I.IntSet) -> [((S.Set Spot, I.IntSet), Int)]
+    step :: (S.Set Spot, KeySet) -> [((S.Set Spot, KeySet), Int)]
     step (bots,keys)
         = concat $ replaceOne (S.toList bots) $ \bot cont ->
-        [((S.fromList (cont (Key key)),keys'), cost)
-        | (key, cost, reqKeys) <- metaTable M.! bot
-        -- , reqKeys `S.isSubsetOf` keys
-        , let keys' = I.insert (fromEnum $ toUpper key) keys
+        [((S.fromList $ cont n,keys'), cost)
+        | (n, cost) <- neighborsG graph bot
+        , keys' <- addKey n keys 
         ]
-    -- reachable keys (Lock c)
-    --   | S.member (toLower c) keys = pure keys
-    --   | otherwise = mempty
-    -- reachable keys (Key c) = pure (S.insert c keys)
-    -- reachable keys (Start _) = pure keys
+    addKey (Key a) s = pure (insertKey a s)
+    addKey (Lock a) s
+      | hasKey a s = pure s
+      | otherwise = []
+    addKey (Start _) s = pure s
 
 
 

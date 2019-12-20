@@ -23,7 +23,12 @@ ghc-options: -Wall
 library:
   dependencies:
   - mtl
+  - megaparsec
+  - logict
   - transformers
+  - suffixtree
+  - pcre-light
+  - bytestring
   - base
   - lens
   - lens-regex-pcre
@@ -32,6 +37,7 @@ library:
   # - ad
   - text
   - search-algorithms
+  - pqueue
   - ghc-prim
   - primitive
   - vector
@@ -53,6 +59,7 @@ executables:
     - -rtsopts
     - -threaded
     - -with-rtsopts=-N
+    - -O2
 
 benchmarks:
   AOC-benchmarks:
